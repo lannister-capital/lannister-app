@@ -10,7 +10,8 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
     "recharts": "^1.5.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "typescript": "^3.4.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,6 +35,12 @@
     ]
   },
   "devDependencies": {
+    "@types/accounting": "^0.4.1",
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.2",
+    "@types/react": "^16.8.17",
+    "@types/react-dom": "^16.8.4",
+    "@types/styled-components": "^4.1.15",
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.13.0"

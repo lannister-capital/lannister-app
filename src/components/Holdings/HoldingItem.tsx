@@ -10,6 +10,7 @@ const ItemContainer = styled.div`
   border-radius: 4px;
   display: flex;
   margin: auto;
+  margin-bottom: 10px;
   max-width: 450px;
   min-height: 65px;
   overflow: hidden;
@@ -66,14 +67,18 @@ const Indicator = styled.div`
     height: 14px;
   }
 `
+interface Holding {
+  name: string
+  amount: number
+}
 
-const HoldingItem = ({ holding }) => {
+const HoldingItem = ({ holding: { name, amount } }: { holding: Holding }) => {
   return (
     <ItemContainer>
       <ColorStrip />
       <HoldingDetails>
-        <HoldingTitle>{holding.name}</HoldingTitle>
-        <HoldingTotal>{accounting.formatMoney(holding.amount)}</HoldingTotal>
+        <HoldingTitle>{name}</HoldingTitle>
+        <HoldingTotal>{accounting.formatMoney(amount)}</HoldingTotal>
       </HoldingDetails>
       <Indicator>
         <img src={forwardIcon} alt="Forward" />
