@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import HoldingsList from '../components/Holdings/HoldingsList'
-import { PieChart, Pie } from 'recharts'
+import { PieChart, Pie, Cell } from 'recharts'
+import db from '../db'
 
 const Container = styled.div`
   padding: 58px;
@@ -18,17 +19,13 @@ const Column = styled.div`
   flex-direction: column;
 `
 
-const data = [
-  { name: 'A1', value: 100 },
-  { name: 'A2', value: 300 },
-  { name: 'B1', value: 100 },
-  { name: 'B2', value: 80 },
-  { name: 'B3', value: 40 },
-  { name: 'B4', value: 30 },
-  { name: 'B5', value: 50 }
-]
-
 const Dashboard = () => {
+  const [holdings, setHoldings] = useState([])
+
+  useEffect(() => {
+    setHoldings(db.read('holdings').value().holdings)
+  }, [])
+
   return (
     <Container>
       <h1>Total Portfolio Value</h1>
@@ -37,19 +34,22 @@ const Dashboard = () => {
         <Column>
           <PieChart width={400} height={400}>
             <Pie
-              data={data}
-              dataKey="value"
+              data={holdings}
+              dataKey="amount"
               cx={200}
               cy={200}
               innerRadius={70}
               outerRadius={90}
               fill="#82ca9d"
-              label
-            />
+              label>
+              {holdings.map((holding, index) => (
+                <Cell key={`cell-${index}`} fill={holding.color} />
+              ))}
+            </Pie>
           </PieChart>
         </Column>
         <Column>
-          <HoldingsList />
+          <HoldingsList holdings={holdings} />
         </Column>
       </Flex>
     </Container>

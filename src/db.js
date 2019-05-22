@@ -14,4 +14,11 @@ db.defaults({ holdings: [] }).write()
 // Example read
 // db.read('holdings').value()
 
+// Example default values
+db.set('holdings', []).write()
+db.get('holdings')
+  .push({ name: 'Example', amount: 20000.0, color: '#ffbf00' })
+  .push({ name: 'Outro exemplo', amount: 50000.0, color: '#A52A2A' })
+  .write()
+
 export default db

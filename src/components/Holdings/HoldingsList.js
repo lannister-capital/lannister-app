@@ -6,25 +6,13 @@ const Container = styled.div`
   text-align: center;
 `
 
-const holdings = [
-  {
-    name: 'Test',
-    amount: 20000.0,
-    color: '#ffbf00'
-  },
-  {
-    name: 'Another',
-    amount: 50000.0,
-    color: '#f00'
-  }
-]
-
-const HoldingsList = () => {
+const HoldingsList = ({ holdings }) => {
   return (
     <Container>
       <h2>Holdings</h2>
-      <HoldingItem holding={holdings[0]} />
-      <HoldingItem holding={holdings[1]} />
+      {holdings.map((holding, index) => {
+        return <HoldingItem holding={holding} key={index} />
+      })}
     </Container>
   )
 }
