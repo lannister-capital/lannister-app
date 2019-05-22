@@ -26,7 +26,7 @@ const ColorStrip = styled.div`
   left: 0;
   width: 6px;
   height: 100%;
-  background-color: #ffbf00;
+  background-color: ${props => props.color || '#ffbf00'};
 `
 
 const HoldingDetails = styled.div`
@@ -70,12 +70,17 @@ const Indicator = styled.div`
 interface Holding {
   name: string
   amount: number
+  color: string
 }
 
-const HoldingItem = ({ holding: { name, amount } }: { holding: Holding }) => {
+const HoldingItem = ({
+  holding: { name, amount, color }
+}: {
+  holding: Holding
+}) => {
   return (
     <ItemContainer>
-      <ColorStrip />
+      <ColorStrip color={color} />
       <HoldingDetails>
         <HoldingTitle>{name}</HoldingTitle>
         <HoldingTotal>{accounting.formatMoney(amount)}</HoldingTotal>

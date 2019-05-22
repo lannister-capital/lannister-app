@@ -9,11 +9,13 @@ const Container = styled.div`
 const holdings = [
   {
     name: 'Test',
-    amount: 20000.0
+    amount: 20000.0,
+    color: '#ffbf00'
   },
   {
     name: 'Another',
-    amount: 50000.0
+    amount: 50000.0,
+    color: '#f00'
   }
 ]
 
