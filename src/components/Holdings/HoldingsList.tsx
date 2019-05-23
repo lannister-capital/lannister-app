@@ -6,11 +6,16 @@ const Container = styled.div`
   text-align: center;
 `
 
-const HoldingsList = ({ holdings }) => {
+interface HoldingsList {
+  holdings: []
+  showTitle: boolean
+}
+
+const HoldingsList = ({ holdings, showTitle = true }) => {
   return (
     <Container>
-      <h2>Holdings</h2>
-      {holdings.map((holding, index) => {
+      {showTitle && <h2>Holdings</h2>}
+      {holdings.map((holding, index: number) => {
         return <HoldingItem holding={holding} key={index} />
       })}
     </Container>

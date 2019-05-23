@@ -4,12 +4,6 @@ import HoldingsList from '../components/Holdings/HoldingsList'
 import { PieChart, Pie, Cell } from 'recharts'
 import db from '../db'
 
-const Container = styled.div`
-  padding: 58px;
-  text-align: left;
-  width: 100%;
-`
-
 const Flex = styled.div`
   display: flex;
 `
@@ -27,7 +21,7 @@ const Dashboard = () => {
   }, [])
 
   return (
-    <Container>
+    <div>
       <h1>Total Portfolio Value</h1>
 
       <Flex>
@@ -52,7 +46,7 @@ const Dashboard = () => {
           <HoldingsList holdings={holdings} />
         </Column>
       </Flex>
-    </Container>
+    </div>
   )
 }
 

@@ -1,8 +1,11 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
+import MainContainer from './components/MainContainer'
 import Sidebar from './components/Sidebar'
 import Dashboard from './views/Dashboard'
+import Holdings from './views/Holdings'
+import Holding from './views/Holding'
 import styled from 'styled-components'
 import './App.css'
 import './styles/typography.css'
@@ -25,7 +28,11 @@ function App() {
           <Sidebar />
         </Column>
         <LargeColumn>
-          <Route path="/" exact component={Dashboard} />
+          <MainContainer>
+            <Route path="/" exact component={Dashboard} />
+            <Route path="/holdings" exact component={Holdings} />
+            <Route path="/holdings/:id" exact component={Holding} />
+          </MainContainer>
         </LargeColumn>
       </div>
     </Router>

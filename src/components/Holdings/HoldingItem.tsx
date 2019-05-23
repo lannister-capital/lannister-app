@@ -1,23 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import accounting from 'accounting'
-// import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import forwardIcon from '../../assets/forward.png'
 
-const ItemContainer = styled.div`
-  background-color: #e8ebf4;
-  border-radius: 4px;
-  display: flex;
-  margin: auto;
-  margin-bottom: 10px;
-  max-width: 450px;
-  min-height: 65px;
-  overflow: hidden;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  position: relative;
-  width: 100%;
+const StylelessLink = styled(Link)`
+  text-decoration: none;
 `
 
 const ColorStrip = styled.div`
@@ -67,6 +56,32 @@ const Indicator = styled.div`
     height: 14px;
   }
 `
+
+const ItemContainer = styled.div`
+  background-color: #e8ebf4;
+  border-radius: 4px;
+  display: flex;
+  margin: auto;
+  margin-bottom: 10px;
+  max-width: 450px;
+  min-height: 65px;
+  overflow: hidden;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+  width: 100%;
+
+  &:hover {
+    background-color: #7686a2;
+    color: #fff !important;
+    cursor: pointer;
+
+    ${HoldingTitle}, ${HoldingTotal}, ${Indicator} {
+      color: #fff;
+    }
+  }
+`
+
 interface Holding {
   name: string
   amount: number
@@ -79,16 +94,18 @@ const HoldingItem = ({
   holding: Holding
 }) => {
   return (
-    <ItemContainer>
-      <ColorStrip color={color} />
-      <HoldingDetails>
-        <HoldingTitle>{name}</HoldingTitle>
-        <HoldingTotal>{accounting.formatMoney(amount)}</HoldingTotal>
-      </HoldingDetails>
-      <Indicator>
-        <img src={forwardIcon} alt="Forward" />
-      </Indicator>
-    </ItemContainer>
+    <StylelessLink to={`/holdings/${name}`}>
+      <ItemContainer>
+        <ColorStrip color={color} />
+        <HoldingDetails>
+          <HoldingTitle>{name}</HoldingTitle>
+          <HoldingTotal>{accounting.formatMoney(amount)}</HoldingTotal>
+        </HoldingDetails>
+        <Indicator>
+          <img src={forwardIcon} alt="Forward" />
+        </Indicator>
+      </ItemContainer>
+    </StylelessLink>
   )
 }
 
