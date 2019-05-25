@@ -25,7 +25,7 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <Container>
-        <SidebarItem path="/" icon={dashboardIcon}>
+        <SidebarItem exact path="/" icon={dashboardIcon}>
           Overview
         </SidebarItem>
         <SidebarItem path="/holdings" icon={holdingsIcon}>

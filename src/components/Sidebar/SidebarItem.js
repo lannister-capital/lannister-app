@@ -33,10 +33,10 @@ const LinkTitle = styled.div`
   padding: 0 20px;
 `
 
-const SidebarItem = ({ path, icon, children }) => {
+const SidebarItem = ({ path, icon, exact, children }) => {
   return (
     <ItemContainer>
-      <NavLink exact to={path} activeClassName="selected">
+      <NavLink exact={exact} to={path} activeClassName="selected">
         <div>{icon && <img src={icon} alt="Icon" />}</div>
         <LinkTitle>{children}</LinkTitle>
       </NavLink>
