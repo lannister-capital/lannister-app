@@ -9,6 +9,7 @@ import Holding from './views/Holding'
 import styled from 'styled-components'
 import './App.css'
 import './styles/typography.css'
+import './styles/modal.css'
 
 const Column = styled.div`
   height: 100vh;
