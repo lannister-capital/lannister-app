@@ -1,10 +1,27 @@
 import low from 'lowdb'
 import LocalStorage from 'lowdb/adapters/LocalStorage'
+import shortid from 'shortid'
 
 const adapter = new LocalStorage('db')
 const db = low(adapter)
 
-db.defaults({ holdings: [] }).write()
+// Example default values
+db.defaults({
+  holdings: [
+    {
+      id: shortid.generate(),
+      name: 'Example',
+      value: 20000.0,
+      color: '#ffbf00'
+    },
+    {
+      id: shortid.generate(),
+      name: 'Outro exemplo',
+      value: 50000.0,
+      color: '#A52A2A'
+    }
+  ]
+}).write()
 
 // Example write
 // db.get('holdings')
@@ -13,12 +30,5 @@ db.defaults({ holdings: [] }).write()
 
 // Example read
 // db.read('holdings').value()
-
-// Example default values
-db.set('holdings', []).write()
-db.get('holdings')
-  .push({ name: 'Example', amount: 20000.0, color: '#ffbf00' })
-  .push({ name: 'Outro exemplo', amount: 50000.0, color: '#A52A2A' })
-  .write()
 
 export default db

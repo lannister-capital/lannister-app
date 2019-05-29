@@ -29,7 +29,7 @@ const Dashboard = () => {
           <PieChart width={400} height={400}>
             <Pie
               data={holdings}
-              dataKey="amount"
+              dataKey="value"
               cx={200}
               cy={200}
               innerRadius={70}

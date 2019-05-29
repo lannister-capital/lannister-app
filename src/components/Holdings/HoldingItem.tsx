@@ -83,23 +83,24 @@ const ItemContainer = styled.div`
 `
 
 interface Holding {
+  id: string
   name: string
-  amount: number
+  value: number
   color: string
 }
 
 const HoldingItem = ({
-  holding: { name, amount, color }
+  holding: { id, name, value, color }
 }: {
   holding: Holding
 }) => {
   return (
-    <StylelessLink to={`/holdings/${name}`}>
+    <StylelessLink to={`/holdings/${id}`}>
       <ItemContainer>
         <ColorStrip color={color} />
         <HoldingDetails>
           <HoldingTitle>{name}</HoldingTitle>
-          <HoldingTotal>{accounting.formatMoney(amount)}</HoldingTotal>
+          <HoldingTotal>{accounting.formatMoney(value)}</HoldingTotal>
         </HoldingDetails>
         <Indicator>
           <img src={forwardIcon} alt="Forward" />

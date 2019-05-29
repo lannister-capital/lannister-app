@@ -3,10 +3,10 @@ import React from 'react'
 import db from '../db'
 
 const Holding = props => {
-  const name = props.match.params.id
+  const id = props.match.params.id
   const holding = db
     .get('holdings')
-    .find({ name: name })
+    .find({ id: id })
     .value()
 
   return (
