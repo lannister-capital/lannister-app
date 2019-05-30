@@ -1,7 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-const StyledButton = styled.button`
+interface StyledButton {
+  primary: boolean
+}
+
+const StyledButton = styled.button<StyledButton>`
   border: 1px solid #2a364a;
   border-radius: 4px;
   color: #2a364a;
@@ -18,6 +22,13 @@ const StyledButton = styled.button`
   &:active {
     box-shadow: 0px 2px 4px #2a364a;
   }
+
+  ${props =>
+    props.primary &&
+    css`
+      background-color: #0938d3;
+      color: #fff;
+    `}
 `
 
 const Button = props => {
