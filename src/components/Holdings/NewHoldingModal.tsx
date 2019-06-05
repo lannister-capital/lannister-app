@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import ReactModal from 'react-modal'
+import { CirclePicker } from 'react-color'
 import Button from '../Button'
 import db from '../../db'
 import shortid from 'shortid'
+
+ReactModal.setAppElement('#root')
 
 const customStyles = {
   overlay: {
@@ -63,6 +66,10 @@ const Input = styled.input`
   width: 100%;
 `
 
+const ColorInputContainer = styled.div`
+  margin-top: 10px;
+`
+
 const NewHoldingModal = props => {
   const [holding, setHolding] = useState({
     name: '',
@@ -74,6 +81,10 @@ const NewHoldingModal = props => {
   const handleInputChange = e => {
     const { name, value } = e.target
     setHolding({ ...holding, [name]: value })
+  }
+
+  const handleColorChange = (color: { hex: string }) => {
+    setHolding({ ...holding, color: color.hex })
   }
 
   const createHolding = event => {
@@ -122,8 +133,16 @@ const NewHoldingModal = props => {
             <Input name="value" type="text" onChange={handleInputChange} />
           </FormGroup>
           <FormGroup>
-            <label>Color Code</label>
-            <Input name="color" type="text" onChange={handleInputChange} />
+            <label>Color</label>
+            <ColorInputContainer>
+              <CirclePicker
+                color={holding.color}
+                onChangeComplete={handleColorChange}
+                width="100%"
+                circleSize={20}
+                circleSpacing={10}
+              />
+            </ColorInputContainer>
           </FormGroup>
           <div style={{ textAlign: 'center' }}>
             <Button primary type="submit">
