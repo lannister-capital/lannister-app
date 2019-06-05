@@ -78,8 +78,8 @@ const NewHoldingModal = props => {
     color: ''
   })
 
-  const handleInputChange = e => {
-    const { name, value } = e.target
+  const handleInputChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget
     setHolding({ ...holding, [name]: value })
   }
 
@@ -87,8 +87,7 @@ const NewHoldingModal = props => {
     setHolding({ ...holding, color: color.hex })
   }
 
-  const createHolding = event => {
-    console.log({ id: shortid.generate(), ...holding })
+  const createHolding = (event: React.SyntheticEvent) => {
     event.preventDefault()
     db.get('holdings')
       .push({ id: shortid.generate(), ...holding })
