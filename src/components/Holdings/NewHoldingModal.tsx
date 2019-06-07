@@ -70,16 +70,42 @@ const ColorInputContainer = styled.div`
   margin-top: 10px;
 `
 
+const CurrencySelect = styled.select`
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #7686a2;
+  border-radius: 0;
+  display: block;
+  font-size: 16px;
+  height: 40px;
+  outline: none;
+  text-transform: capitalize;
+  -webkit-appearance: none;
+  width: 100%;
+`
+
+interface Currency {
+  name: string
+  symbol: string
+  code: string
+  euro_rate: number
+}
+
+const currencies = db.get('currencies').value()
+
 const NewHoldingModal = props => {
   const [holding, setHolding] = useState({
     name: '',
-    currency: '',
+    currency: 'USD',
     value: 0,
     color: ''
   })
 
-  const handleInputChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.currentTarget
+    console.log(value)
     setHolding({ ...holding, [name]: value })
   }
 
@@ -125,11 +151,27 @@ const NewHoldingModal = props => {
           </FormGroup>
           <FormGroup>
             <label>Currency</label>
-            <Input name="currency" type="text" onChange={handleInputChange} />
+            <CurrencySelect
+              name="currency"
+              onChange={e => handleInputChange(e)}
+              value={holding.currency}>
+              {currencies.map((currency: Currency) => {
+                return (
+                  <option value={currency.code}>
+                    {currency.name} ({currency.symbol})
+                  </option>
+                )
+              })}
+            </CurrencySelect>
           </FormGroup>
           <FormGroup>
             <label>Total Value</label>
-            <Input name="value" type="text" onChange={handleInputChange} />
+            <Input
+              name="value"
+              type="text"
+              onChange={handleInputChange}
+              value={holding.value}
+            />
           </FormGroup>
           <FormGroup>
             <label>Color</label>
