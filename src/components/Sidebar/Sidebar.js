@@ -1,16 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import SidebarItem from './SidebarItem'
+import SidebarLogo from './SidebarLogo'
 
+import logoIcon from '../../assets/lion.png'
 import dashboardIcon from '../../assets/dashboard.png'
 import holdingsIcon from '../../assets/holdings.png'
 import recommendationsIcon from '../../assets/recommendations.png'
 import settingsIcon from '../../assets/settings.png'
-
-const SidebarLogo = styled.div`
-  position: absolute;
-  top: 0;
-`
 
 const SidebarContainer = styled.div`
   height: 100%;
@@ -30,9 +27,7 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <Container>
-        <SidebarLogo>
-          <SidebarItem icon={dashboardIcon} />
-        </SidebarLogo>
+        <SidebarLogo icon={logoIcon} />
         <SidebarItem exact path="/" icon={dashboardIcon}>
           Overview
         </SidebarItem>
