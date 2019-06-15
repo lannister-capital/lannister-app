@@ -7,6 +7,11 @@ import holdingsIcon from '../../assets/holdings.png'
 import recommendationsIcon from '../../assets/recommendations.png'
 import settingsIcon from '../../assets/settings.png'
 
+const SidebarLogo = styled.div`
+  position: absolute;
+  top: 0;
+`
+
 const SidebarContainer = styled.div`
   height: 100%;
   width: 100%;
@@ -25,6 +30,9 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <Container>
+        <SidebarLogo>
+          <SidebarItem icon={dashboardIcon} />
+        </SidebarLogo>
         <SidebarItem exact path="/" icon={dashboardIcon}>
           Overview
         </SidebarItem>
