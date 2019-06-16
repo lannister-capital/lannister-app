@@ -7,7 +7,7 @@ const Logo = styled.div`
   margin: 20px 0;
 
   img {
-    width: 35px;
+    width: 45px;
   }
 `
 
