@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import * as blockstack from 'blockstack'
 
 import MainContainer from './components/MainContainer'
 import Sidebar from './components/Sidebar'
@@ -23,23 +22,6 @@ const LargeColumn = styled(Column)`
 `
 
 function App() {
-  blockstack.signUserOut()
-  const userSession = new blockstack.UserSession()
-  const appDomain = 'https://lannister.capital'
-  const transitPrivateKey = userSession.generateAndStoreTransitKey()
-  const redirectURI = appDomain + '/redirect-web-localhost.html'
-  const manifestURI = appDomain + '/manifest.json'
-  const scopes = ['store_write']
-  const authRequest = blockstack.makeAuthRequest(
-    transitPrivateKey,
-    redirectURI,
-    manifestURI,
-    scopes,
-    appDomain
-  )
-
-  blockstack.redirectToSignInWithAuthRequest(authRequest)
-
   return (
     <Router>
       <div className="App">
