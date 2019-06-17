@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import SidebarItem from './SidebarItem'
+import SidebarLogo from './SidebarLogo'
 
+import logoIcon from '../../assets/lion.png'
 import dashboardIcon from '../../assets/dashboard.png'
 import holdingsIcon from '../../assets/holdings.png'
 import recommendationsIcon from '../../assets/recommendations.png'
@@ -25,6 +27,7 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <Container>
+        <SidebarLogo icon={logoIcon} />
         <SidebarItem exact path="/" icon={dashboardIcon}>
           Overview
         </SidebarItem>
