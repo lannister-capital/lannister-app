@@ -23,12 +23,23 @@ const LargeColumn = styled(Column)`
 `
 
 function App() {
-  const { origin } = window.location
-  blockstack.redirectToSignIn(
-    origin,
-    'https://lannister.capital/manifest.json',
-    ['store_write']
+  blockstack.signUserOut()
+  const userSession = new blockstack.UserSession()
+  const appDomain = 'https://lannister.capital'
+  const transitPrivateKey = userSession.generateAndStoreTransitKey()
+  const redirectURI = appDomain + '/redirect-web-localhost.html'
+  const manifestURI = appDomain + '/manifest.json'
+  const scopes = ['store_write']
+  const authRequest = blockstack.makeAuthRequest(
+    transitPrivateKey,
+    redirectURI,
+    manifestURI,
+    scopes,
+    appDomain
   )
+
+  blockstack.redirectToSignInWithAuthRequest(authRequest)
+
   return (
     <Router>
       <div className="App">
