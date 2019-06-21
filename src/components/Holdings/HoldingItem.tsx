@@ -60,7 +60,6 @@ const HoldingItem = ({
     .get('currencies')
     .find({ code: currency })
     .value()
-  console.log(currency)
   return (
     <StylelessLink to={`/holdings/${id}`}>
       <HoldingItemContainer>
