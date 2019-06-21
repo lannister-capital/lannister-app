@@ -1,18 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import HoldingsList from '../components/Holdings/HoldingsList'
+import { Flex, Column } from '../components/Grid'
 import { PieChart, Pie, Cell } from 'recharts'
 import LongButton from '../components/LongButton'
 import db from '../db'
-
-const Flex = styled.div`
-  display: flex;
-`
-
-const Column = styled.div`
-  flex: 1;
-  flex-direction: column;
-`
 
 const Dashboard = () => {
   const [holdings, setHoldings] = useState([])
@@ -45,7 +36,7 @@ const Dashboard = () => {
         </Column>
         <Column>
           <HoldingsList holdings={holdings} />
-          <LongButton text="See All"/>
+          <LongButton text="See All" />
         </Column>
       </Flex>
     </div>
