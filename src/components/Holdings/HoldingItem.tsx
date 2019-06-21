@@ -1,13 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import accounting from 'accounting'
-import { 
-  StylelessLink, 
-  Wrapper, 
+import {
+  StylelessLink,
+  Wrapper,
   VerticalMiddleContainer,
   Indicator,
   ItemContainer
 } from '../LongItem'
+import db from '../../db'
 
 import forwardIcon from '../../assets/forward.png'
 
@@ -47,20 +48,28 @@ interface Holding {
   name: string
   value: number
   color: string
+  currency: string
 }
 
 const HoldingItem = ({
-  holding: { id, name, value, color }
+  holding: { id, name, value, color, currency }
 }: {
   holding: Holding
 }) => {
+  const currencySymbol = db
+    .get('currencies')
+    .find({ code: currency })
+    .value()
+  console.log(currency)
   return (
     <StylelessLink to={`/holdings/${id}`}>
       <HoldingItemContainer>
         <ColorStrip color={color} />
         <Wrapper>
           <HoldingTitle>{name}</HoldingTitle>
-          <HoldingTotal>{accounting.formatMoney(value)}</HoldingTotal>
+          <HoldingTotal>
+            {accounting.formatMoney(value, currencySymbol)}
+          </HoldingTotal>
         </Wrapper>
         <Indicator>
           <img src={forwardIcon} alt="Forward" />
