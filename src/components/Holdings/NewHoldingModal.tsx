@@ -105,8 +105,14 @@ const NewHoldingModal = props => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.currentTarget
-    console.log(value)
     setHolding({ ...holding, [name]: value })
+  }
+
+  const handleValueChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.currentTarget
+    setHolding({ ...holding, [name]: parseInt(value) })
   }
 
   const handleColorChange = (color: { hex: string }) => {
@@ -157,7 +163,7 @@ const NewHoldingModal = props => {
               value={holding.currency}>
               {currencies.map((currency: Currency) => {
                 return (
-                  <option value={currency.code}>
+                  <option key={currency.code} value={currency.code}>
                     {currency.name} ({currency.symbol})
                   </option>
                 )
@@ -168,8 +174,8 @@ const NewHoldingModal = props => {
             <label>Total Value</label>
             <Input
               name="value"
-              type="text"
-              onChange={handleInputChange}
+              type="number"
+              onChange={handleValueChange}
               value={holding.value}
             />
           </FormGroup>
