@@ -8,3 +8,7 @@ export const Column = styled.div`
   flex: 1;
   flex-direction: column;
 `
+
+export const RightAlignContainer = styled.div`
+  text-align: right;
+`
