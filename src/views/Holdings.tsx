@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from '../components/Button'
 import { Flex, Column } from '../components/Grid'
-import NewHoldingModal from '../components/Holdings/NewHoldingModal'
+import HoldingModal from '../components/Holdings/HoldingModal'
 import HoldingsList from '../components/Holdings/HoldingsList'
 import db from '../db'
 
@@ -54,7 +54,7 @@ const Holdings = () => {
         <Column />
       </Flex>
 
-      <NewHoldingModal
+      <HoldingModal
         isOpen={openHoldingModal}
         onRequestClose={() => setOpenHoldingModal(false)}
         onCancel={() => setOpenHoldingModal(false)}

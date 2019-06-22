@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ReactModal from 'react-modal'
 import { CirclePicker } from 'react-color'
@@ -86,13 +86,27 @@ const CurrencySelect = styled.select`
 
 const currencies = db.get('currencies').value()
 
-const NewHoldingModal = props => {
+interface ModalProps {
+  holding?: Holding
+  onCreate: Function
+  onCancel: Function
+  isOpen: Boolean
+  onRequestClose?: Function
+}
+
+const HoldingModal = (props: ModalProps) => {
   const [holding, setHolding] = useState({
     name: '',
     currency: 'USD',
     value: 0,
     color: ''
   })
+
+  useEffect(() => {
+    if (props.holding) {
+      setHolding(props.holding)
+    }
+  }, [props.holding])
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -114,9 +128,18 @@ const NewHoldingModal = props => {
 
   const createHolding = (event: React.SyntheticEvent) => {
     event.preventDefault()
-    db.get('holdings')
-      .push({ id: shortid.generate(), ...holding })
-      .write()
+    if (props.holding) {
+      // Update holding
+      db.get('holdings')
+        .find({ id: props.holding.id })
+        .assign({ ...holding })
+        .write()
+    } else {
+      // Create new holding
+      db.get('holdings')
+        .push({ id: shortid.generate(), ...holding })
+        .write()
+    }
     props.onCreate(holding)
   }
 
@@ -195,4 +218,4 @@ const NewHoldingModal = props => {
   )
 }
 
-export default NewHoldingModal
+export default HoldingModal

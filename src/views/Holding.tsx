@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import accounting from 'accounting'
 import { PieChart, Pie, Cell } from 'recharts'
 import Button from '../components/Button'
 import { Flex, Column, RightAlignContainer } from '../components/Grid'
 import db from '../db'
+import HoldingModal from '../components/Holdings/HoldingModal'
 
 const TotalValue = styled.div`
   color: #2a364a;
@@ -18,6 +19,7 @@ const ButtonWrapper = styled.div`
 
 const Holding = (props: { match: { params: { id: string } } }) => {
   const id = props.match.params.id
+  const [openHoldingModal, setOpenHoldingModal] = useState(false)
 
   const holdings = db.read('holdings').value().holdings
   const totalHoldingsValue = holdings.reduce((a, b) => a + b.value, 0)
@@ -39,7 +41,9 @@ const Holding = (props: { match: { params: { id: string } } }) => {
         <Column>
           <RightAlignContainer>
             <ButtonWrapper>
-              <Button>Edit Holding</Button>
+              <Button onClick={() => setOpenHoldingModal(true)}>
+                Edit Holding
+              </Button>
             </ButtonWrapper>
             <ButtonWrapper>
               <Button>Add New Transaction</Button>
@@ -68,6 +72,14 @@ const Holding = (props: { match: { params: { id: string } } }) => {
           </PieChart>
         </Column>
       </Flex>
+
+      <HoldingModal
+        isOpen={openHoldingModal}
+        onRequestClose={() => setOpenHoldingModal(false)}
+        onCancel={() => setOpenHoldingModal(false)}
+        onCreate={() => setOpenHoldingModal(false)}
+        holding={holding}
+      />
     </div>
   )
 }
