@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import accounting from 'accounting'
+import styled from 'styled-components'
 import HoldingsList from '../components/Holdings/HoldingsList'
 import { Flex, Column } from '../components/Grid'
 import { PieChart, Pie, Cell } from 'recharts'
 import LongButton from '../components/LongButton'
 import db from '../db'
+
+const TotalValue = styled.div`
+  color: #2a364a;
+  font-size: 28px;
+`
 
 const Dashboard = () => {
   const [holdings, setHoldings] = useState([])
@@ -12,12 +19,17 @@ const Dashboard = () => {
     setHoldings(db.read('holdings').value().holdings)
   }, [])
 
+  const totalHoldingsValue = holdings.reduce((a, b) => a + b.value, 0)
+
   return (
     <div>
       <h1>Total Portfolio Value</h1>
 
       <Flex>
         <Column>
+          <TotalValue>
+            {accounting.formatMoney(totalHoldingsValue, '€')}
+          </TotalValue>
           <PieChart width={400} height={400}>
             <Pie
               data={holdings}
