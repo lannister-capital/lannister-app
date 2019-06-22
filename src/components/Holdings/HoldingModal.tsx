@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import ReactModal from 'react-modal'
 import { CirclePicker } from 'react-color'
 import Button from '../Button'
-import { FormGroup, Input } from '../Form'
+import { FormGroup, Input, SelectInput } from '../Form'
 import db from '../../db'
 import shortid from 'shortid'
 
@@ -52,20 +52,6 @@ const ModalBody = styled.div`
 
 const ColorInputContainer = styled.div`
   margin-top: 10px;
-`
-
-const CurrencySelect = styled.select`
-  background-color: transparent;
-  border: none;
-  border-bottom: 2px solid #7686a2;
-  border-radius: 0;
-  display: block;
-  font-size: 16px;
-  height: 40px;
-  outline: none;
-  text-transform: capitalize;
-  -webkit-appearance: none;
-  width: 100%;
 `
 
 const currencies = db.get('currencies').value()
@@ -157,7 +143,7 @@ const HoldingModal = (props: ModalProps) => {
           </FormGroup>
           <FormGroup>
             <label>Currency</label>
-            <CurrencySelect
+            <SelectInput
               name="currency"
               onChange={e => handleInputChange(e)}
               value={holding.currency}>
@@ -168,7 +154,7 @@ const HoldingModal = (props: ModalProps) => {
                   </option>
                 )
               })}
-            </CurrencySelect>
+            </SelectInput>
           </FormGroup>
           <FormGroup>
             <label>Total Value</label>

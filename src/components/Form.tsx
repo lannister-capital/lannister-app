@@ -16,3 +16,17 @@ export const Input = styled.input`
   padding: 3px 0;
   width: 100%;
 `
+
+export const SelectInput = styled.select`
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #7686a2;
+  border-radius: 0;
+  display: block;
+  font-size: 16px;
+  height: 40px;
+  outline: none;
+  text-transform: capitalize;
+  -webkit-appearance: none;
+  width: 100%;
+`

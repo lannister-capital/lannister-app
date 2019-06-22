@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ReactModal from 'react-modal'
 import Button from '../Button'
-import { FormGroup, Input } from '../Form'
+import { FormGroup, Input, SelectInput } from '../Form'
 import db from '../../db'
 import shortid from 'shortid'
 
@@ -100,8 +100,12 @@ const TransactionModal = (props: ModalProps) => {
     }
     dbHolding.transactions.push({ id: shortid.generate(), ...transaction })
 
-    // Add value to holding
-    dbHolding.value += transaction.value
+    // Update holding value
+    if (transaction.type === 'credit') {
+      dbHolding.value += transaction.value
+    } else {
+      dbHolding.value -= transaction.value
+    }
 
     db.get('holdings')
       .find({ id: props.holding.id })
@@ -137,6 +141,16 @@ const TransactionModal = (props: ModalProps) => {
               type="text"
               onChange={handleInputChange}
             />
+          </FormGroup>
+          <FormGroup>
+            <label>Type</label>
+            <SelectInput
+              name="type"
+              onChange={e => handleInputChange(e)}
+              value={transaction.type}>
+              <option value="credit">Credit</option>
+              <option value="debit">Debit</option>
+            </SelectInput>
           </FormGroup>
           <FormGroup>
             <label>Total Value</label>
