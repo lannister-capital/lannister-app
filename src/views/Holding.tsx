@@ -6,6 +6,7 @@ import Button from '../components/Button'
 import { Flex, Column, RightAlignContainer } from '../components/Grid'
 import db from '../db'
 import HoldingModal from '../components/Holdings/HoldingModal'
+import TransactionModal from '../components/Transactions/TransactionModal'
 
 const TotalValue = styled.div`
   color: #2a364a;
@@ -20,6 +21,7 @@ const ButtonWrapper = styled.div`
 const Holding = (props: { match: { params: { id: string } } }) => {
   const id = props.match.params.id
   const [openHoldingModal, setOpenHoldingModal] = useState(false)
+  const [openTransactionModal, setOpenTransactionModal] = useState(false)
 
   const holdings = db.read('holdings').value().holdings
   const totalHoldingsValue = holdings.reduce((a, b) => a + b.value, 0)
@@ -46,7 +48,9 @@ const Holding = (props: { match: { params: { id: string } } }) => {
               </Button>
             </ButtonWrapper>
             <ButtonWrapper>
-              <Button>Add New Transaction</Button>
+              <Button onClick={() => setOpenTransactionModal(true)}>
+                Add New Transaction
+              </Button>
             </ButtonWrapper>
           </RightAlignContainer>
         </Column>
@@ -78,6 +82,14 @@ const Holding = (props: { match: { params: { id: string } } }) => {
         onRequestClose={() => setOpenHoldingModal(false)}
         onCancel={() => setOpenHoldingModal(false)}
         onCreate={() => setOpenHoldingModal(false)}
+        holding={holding}
+      />
+
+      <TransactionModal
+        isOpen={openTransactionModal}
+        onRequestClose={() => setOpenTransactionModal(false)}
+        onCancel={() => setOpenTransactionModal(false)}
+        onCreate={() => setOpenTransactionModal(false)}
         holding={holding}
       />
     </div>

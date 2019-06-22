@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ReactModal from 'react-modal'
-import { CirclePicker } from 'react-color'
 import Button from '../Button'
 import { FormGroup, Input } from '../Form'
 import db from '../../db'
@@ -50,81 +49,65 @@ const ModalBody = styled.div`
   padding: 40px;
 `
 
-const ColorInputContainer = styled.div`
-  margin-top: 10px;
-`
-
-const CurrencySelect = styled.select`
-  background-color: transparent;
-  border: none;
-  border-bottom: 2px solid #7686a2;
-  border-radius: 0;
-  display: block;
-  font-size: 16px;
-  height: 40px;
-  outline: none;
-  text-transform: capitalize;
-  -webkit-appearance: none;
-  width: 100%;
-`
-
-const currencies = db.get('currencies').value()
-
 interface ModalProps {
-  holding?: Holding
+  transaction?: Transaction
+  holding: Holding
   onCreate: Function
   onCancel: Function
   isOpen: Boolean
   onRequestClose?: Function
 }
 
-const HoldingModal = (props: ModalProps) => {
-  const [holding, setHolding] = useState({
+const TransactionModal = (props: ModalProps) => {
+  const [transaction, setTransaction] = useState({
     name: '',
-    currency: 'USD',
     value: 0,
-    color: ''
+    type: 'credit',
+    date: new Date().toISOString()
   })
 
   useEffect(() => {
-    if (props.holding) {
-      setHolding(props.holding)
+    if (props.transaction) {
+      setTransaction(props.transaction)
     }
-  }, [props.holding])
+  }, [props.transaction])
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.currentTarget
-    setHolding({ ...holding, [name]: value })
+    setTransaction({ ...transaction, [name]: value })
   }
 
   const handleValueChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.currentTarget
-    setHolding({ ...holding, [name]: parseInt(value) })
+    setTransaction({ ...transaction, [name]: parseInt(value) })
   }
 
-  const handleColorChange = (color: { hex: string }) => {
-    setHolding({ ...holding, color: color.hex })
-  }
-
-  const createHolding = (event: React.SyntheticEvent) => {
+  const createTransaction = (event: React.SyntheticEvent) => {
     event.preventDefault()
-    if (props.holding) {
-      // Update holding
-      db.get('holdings')
-        .find({ id: props.holding.id })
-        .assign({ ...holding })
-        .write()
-    } else {
-      // Create new holding
-      db.get('holdings')
-        .push({ id: shortid.generate(), ...holding })
-        .write()
+
+    var dbHolding: Holding = db
+      .get('holdings')
+      .find({ id: props.holding.id })
+      .value()
+
+    // Add transaction to array
+    if (!dbHolding.transactions) {
+      dbHolding.transactions = []
     }
-    props.onCreate(holding)
+    dbHolding.transactions.push({ id: shortid.generate(), ...transaction })
+
+    // Add value to holding
+    dbHolding.value += transaction.value
+
+    db.get('holdings')
+      .find({ id: props.holding.id })
+      .assign({ ...dbHolding })
+      .write()
+    props.onCreate(transaction)
   }
 
   return (
@@ -134,7 +117,7 @@ const HoldingModal = (props: ModalProps) => {
       closeTimeoutMS={300}
       {...props}>
       <ModalHeader>
-        New Holding
+        New Transaction
         <CancelButton
           onClick={() => {
             props.onCancel()
@@ -144,31 +127,16 @@ const HoldingModal = (props: ModalProps) => {
       </ModalHeader>
 
       <ModalBody>
-        <form onSubmit={createHolding}>
+        <form onSubmit={createTransaction}>
           <FormGroup>
-            <label>Name of Holding</label>
+            <label>Name of Transaction</label>
             <Input
               name="name"
-              value={holding.name}
-              placeholder="Ex. Coinbase"
+              value={transaction.name}
+              placeholder="Ex. June Dividends"
               type="text"
               onChange={handleInputChange}
             />
-          </FormGroup>
-          <FormGroup>
-            <label>Currency</label>
-            <CurrencySelect
-              name="currency"
-              onChange={e => handleInputChange(e)}
-              value={holding.currency}>
-              {currencies.map((currency: Currency) => {
-                return (
-                  <option key={currency.code} value={currency.code}>
-                    {currency.name} ({currency.symbol})
-                  </option>
-                )
-              })}
-            </CurrencySelect>
           </FormGroup>
           <FormGroup>
             <label>Total Value</label>
@@ -176,20 +144,8 @@ const HoldingModal = (props: ModalProps) => {
               name="value"
               type="number"
               onChange={handleValueChange}
-              value={holding.value}
+              value={transaction.value}
             />
-          </FormGroup>
-          <FormGroup>
-            <label>Color</label>
-            <ColorInputContainer>
-              <CirclePicker
-                color={holding.color}
-                onChangeComplete={handleColorChange}
-                width="100%"
-                circleSize={20}
-                circleSpacing={10}
-              />
-            </ColorInputContainer>
           </FormGroup>
           <div style={{ textAlign: 'center' }}>
             <Button primary type="submit">
@@ -202,4 +158,4 @@ const HoldingModal = (props: ModalProps) => {
   )
 }
 
-export default HoldingModal
+export default TransactionModal
