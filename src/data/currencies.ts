@@ -1,10 +1,3 @@
-export interface Currency {
-  name: string
-  symbol: string
-  code: string
-  euro_rate: number
-}
-
 export default [
   {
     name: 'euro',

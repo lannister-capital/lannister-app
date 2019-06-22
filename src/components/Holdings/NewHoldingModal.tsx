@@ -84,13 +84,6 @@ const CurrencySelect = styled.select`
   width: 100%;
 `
 
-interface Currency {
-  name: string
-  symbol: string
-  code: string
-  euro_rate: number
-}
-
 const currencies = db.get('currencies').value()
 
 const NewHoldingModal = props => {

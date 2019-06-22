@@ -43,14 +43,6 @@ const HoldingItemContainer = styled(ItemContainer)`
   }
 `
 
-interface Holding {
-  id: string
-  name: string
-  value: number
-  color: string
-  currency: string
-}
-
 const HoldingItem = ({
   holding: { id, name, value, color, currency }
 }: {
