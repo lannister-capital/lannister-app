@@ -1,23 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import accounting from 'accounting'
-<<<<<<< HEAD
-import { 
-  StylelessLink, 
-  Wrapper, 
-=======
 import {
   StylelessLink,
   Wrapper,
->>>>>>> upstream/master
   VerticalMiddleContainer,
   Indicator,
   ItemContainer
 } from '../LongItem'
-<<<<<<< HEAD
-=======
 import db from '../../db'
->>>>>>> upstream/master
 
 import forwardIcon from '../../assets/forward.png'
 
