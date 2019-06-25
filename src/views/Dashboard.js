@@ -5,7 +5,6 @@ import HoldingsList from '../components/Holdings/HoldingsList'
 import { Flex, Column } from '../components/Grid'
 import { PieChart, Pie, Cell } from 'recharts'
 import LongButton from '../components/LongButton'
-import { getPrice } from '../data/price'
 import db from '../db'
 
 const TotalValue = styled.div`
