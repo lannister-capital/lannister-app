@@ -1,13 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 import accounting from 'accounting'
+<<<<<<< HEAD
 import { 
   StylelessLink, 
   Wrapper, 
+=======
+import {
+  StylelessLink,
+  Wrapper,
+>>>>>>> upstream/master
   VerticalMiddleContainer,
   Indicator,
   ItemContainer
 } from '../LongItem'
+<<<<<<< HEAD
+=======
+import db from '../../db'
+>>>>>>> upstream/master
 
 import forwardIcon from '../../assets/forward.png'
 
@@ -42,25 +52,24 @@ const HoldingItemContainer = styled(ItemContainer)`
   }
 `
 
-interface Holding {
-  id: string
-  name: string
-  value: number
-  color: string
-}
-
 const HoldingItem = ({
-  holding: { id, name, value, color }
+  holding: { id, name, value, color, currency }
 }: {
   holding: Holding
 }) => {
+  const currencySymbol = db
+    .get('currencies')
+    .find({ code: currency })
+    .value()
   return (
     <StylelessLink to={`/holdings/${id}`}>
       <HoldingItemContainer>
         <ColorStrip color={color} />
         <Wrapper>
           <HoldingTitle>{name}</HoldingTitle>
-          <HoldingTotal>{accounting.formatMoney(value)}</HoldingTotal>
+          <HoldingTotal>
+            {accounting.formatMoney(value, currencySymbol)}
+          </HoldingTotal>
         </Wrapper>
         <Indicator>
           <img src={forwardIcon} alt="Forward" />

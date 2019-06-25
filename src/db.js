@@ -13,13 +13,15 @@ db.defaults({
       id: shortid.generate(),
       name: 'Example',
       value: 20000.0,
-      color: '#ffbf00'
+      color: '#ffbf00',
+      currency: 'EUR'
     },
     {
       id: shortid.generate(),
-      name: 'Outro exemplo',
+      name: 'Bank account',
       value: 50000.0,
-      color: '#A52A2A'
+      color: '#A52A2A',
+      currency: 'EUR'
     }
   ],
   currencies

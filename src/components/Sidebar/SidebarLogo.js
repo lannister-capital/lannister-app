@@ -11,11 +11,10 @@ const Logo = styled.div`
   }
 `
 
-const SidebarLogo = ({icon}) => {
-  console.log(icon);
+const SidebarLogo = ({ icon }) => {
   return (
     <Logo>
-        <div>{icon && <img src={icon} alt="Icon" />}</div>
+      <div>{icon && <img src={icon} alt="Icon" />}</div>
     </Logo>
   )
 }

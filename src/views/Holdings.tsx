@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from '../components/Button'
-import NewHoldingModal from '../components/Holdings/NewHoldingModal'
+import { Flex, Column } from '../components/Grid'
+import HoldingModal from '../components/Holdings/HoldingModal'
 import HoldingsList from '../components/Holdings/HoldingsList'
 import db from '../db'
-
-const Flex = styled.div`
-  display: flex;
-`
-
-const Column = styled.div`
-  flex: 1;
-  flex-direction: column;
-`
 
 const RightAlignContainer = styled.div`
   text-align: right;
@@ -62,7 +54,7 @@ const Holdings = () => {
         <Column />
       </Flex>
 
-      <NewHoldingModal
+      <HoldingModal
         isOpen={openHoldingModal}
         onRequestClose={() => setOpenHoldingModal(false)}
         onCancel={() => setOpenHoldingModal(false)}

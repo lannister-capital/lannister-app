@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ReactModal from 'react-modal'
 import { CirclePicker } from 'react-color'
 import Button from '../Button'
+import { FormGroup, Input, SelectInput } from '../Form'
 import db from '../../db'
 import shortid from 'shortid'
 
@@ -49,51 +50,21 @@ const ModalBody = styled.div`
   padding: 40px;
 `
 
-const FormGroup = styled.div`
-  margin-bottom: 30px;
-`
-
-const Input = styled.input`
-  border: none;
-  border-bottom: 2px solid #7686a2;
-  color: #2a364a;
-  display: block;
-  font-size: 16px;
-  margin-top: 4px;
-  line-height: 26px;
-  outline: none;
-  padding: 3px 0;
-  width: 100%;
-`
-
 const ColorInputContainer = styled.div`
   margin-top: 10px;
 `
 
-const CurrencySelect = styled.select`
-  background-color: transparent;
-  border: none;
-  border-bottom: 2px solid #7686a2;
-  border-radius: 0;
-  display: block;
-  font-size: 16px;
-  height: 40px;
-  outline: none;
-  text-transform: capitalize;
-  -webkit-appearance: none;
-  width: 100%;
-`
-
-interface Currency {
-  name: string
-  symbol: string
-  code: string
-  euro_rate: number
-}
-
 const currencies = db.get('currencies').value()
 
-const NewHoldingModal = props => {
+interface ModalProps {
+  holding?: Holding
+  onCreate: Function
+  onCancel: Function
+  isOpen: Boolean
+  onRequestClose?: Function
+}
+
+const HoldingModal = (props: ModalProps) => {
   const [holding, setHolding] = useState({
     name: '',
     currency: 'USD',
@@ -101,12 +72,24 @@ const NewHoldingModal = props => {
     color: ''
   })
 
+  useEffect(() => {
+    if (props.holding) {
+      setHolding(props.holding)
+    }
+  }, [props.holding])
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.currentTarget
-    console.log(value)
     setHolding({ ...holding, [name]: value })
+  }
+
+  const handleValueChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.currentTarget
+    setHolding({ ...holding, [name]: parseInt(value) })
   }
 
   const handleColorChange = (color: { hex: string }) => {
@@ -115,9 +98,18 @@ const NewHoldingModal = props => {
 
   const createHolding = (event: React.SyntheticEvent) => {
     event.preventDefault()
-    db.get('holdings')
-      .push({ id: shortid.generate(), ...holding })
-      .write()
+    if (props.holding) {
+      // Update holding
+      db.get('holdings')
+        .find({ id: props.holding.id })
+        .assign({ ...holding })
+        .write()
+    } else {
+      // Create new holding
+      db.get('holdings')
+        .push({ id: shortid.generate(), ...holding })
+        .write()
+    }
     props.onCreate(holding)
   }
 
@@ -151,25 +143,25 @@ const NewHoldingModal = props => {
           </FormGroup>
           <FormGroup>
             <label>Currency</label>
-            <CurrencySelect
+            <SelectInput
               name="currency"
               onChange={e => handleInputChange(e)}
               value={holding.currency}>
               {currencies.map((currency: Currency) => {
                 return (
-                  <option value={currency.code}>
+                  <option key={currency.code} value={currency.code}>
                     {currency.name} ({currency.symbol})
                   </option>
                 )
               })}
-            </CurrencySelect>
+            </SelectInput>
           </FormGroup>
           <FormGroup>
             <label>Total Value</label>
             <Input
               name="value"
-              type="text"
-              onChange={handleInputChange}
+              type="number"
+              onChange={handleValueChange}
               value={holding.value}
             />
           </FormGroup>
@@ -196,4 +188,4 @@ const NewHoldingModal = props => {
   )
 }
 
-export default NewHoldingModal
+export default HoldingModal
