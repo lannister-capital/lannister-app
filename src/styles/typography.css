@@ -10,3 +10,11 @@ h2 {
   font-size: 24px;
   margin-top: 0;
 }
+
+h3 {
+  color: #7686a2;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 1px;
+  margin-top: 0;
+}

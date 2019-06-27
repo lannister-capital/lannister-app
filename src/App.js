@@ -6,7 +6,9 @@ import Sidebar from './components/Sidebar'
 import Dashboard from './views/Dashboard'
 import Holdings from './views/Holdings'
 import Holding from './views/Holding'
+import Settings from './views/Settings'
 import styled from 'styled-components'
+
 import './App.css'
 import './styles/typography.css'
 import './styles/modal.css'
@@ -33,6 +35,7 @@ function App() {
             <Route path="/" exact component={Dashboard} />
             <Route path="/holdings" exact component={Holdings} />
             <Route path="/holdings/:id" exact component={Holding} />
+            <Route path="/settings" exact component={Settings} />
           </MainContainer>
         </LargeColumn>
       </div>
