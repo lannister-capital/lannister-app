@@ -30,15 +30,15 @@ const Holdings = () => {
       <FlexColumn>
         <LeftColumn>
           <h3>Local</h3>
-          <SettingsItem text="Currency" link="http://www.google.com" icon={logoIcon} />
-          <SettingsItem text="Sync with Blockstack" link="" icon={logoIcon} />
-          <SettingsItem text="Export Data" link="" icon={logoIcon} />
+          <SettingsItem text="Currency" link="#" icon={logoIcon} />
+          <SettingsItem text="Sync with Blockstack" link="#" icon={logoIcon} />
+          <SettingsItem text="Export Data" link="#" icon={logoIcon} />
         </LeftColumn>
         <LeftColumn>
           <h3>About</h3>
-          <SettingsItem text="Twitter" link="https://github.com/lannister-capital/lannister-app" icon={logoIcon} />
-          <SettingsItem text="Discord" link="https://github.com/lannister-capital" icon={logoIcon} />
-          <SettingsItem text="Github" link="https://twitter.com/lannistercap" icon={logoIcon} />
+          <SettingsItem text="Twitter" link="https://twitter.com/lannistercap" icon={logoIcon} />
+          <SettingsItem text="Discord" link="https://discordapp.com/invite/6SrsfUf" icon={logoIcon} />
+          <SettingsItem text="Github" link="https://github.com/lannister-capital/lannister-app" icon={logoIcon} />
         </LeftColumn>
         <Column />
       </FlexColumn>
