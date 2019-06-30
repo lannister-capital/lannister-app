@@ -2,7 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { Flex, Column } from '../components/Grid'
 import SettingsItem from '../components/Settings/SettingsItem'
-import logoIcon from '../assets/lion.png'
+import currencyIcon from '../assets/currency.svg'
+import syncIcon from '../assets/sync.svg'
+import exportIcon from '../assets/export.svg'
+import twitterIcon from '../assets/twitter.svg'
+import discordIcon from '../assets/discord.svg'
+import githubIcon from '../assets/github.svg'
 
 const FlexColumn = styled(Flex)`
   flex-direction: column;
@@ -30,15 +35,15 @@ const Holdings = () => {
       <FlexColumn>
         <LeftColumn>
           <h3>Local</h3>
-          <SettingsItem text="Currency" link="#" icon={logoIcon} />
-          <SettingsItem text="Sync with Blockstack" link="#" icon={logoIcon} />
-          <SettingsItem text="Export Data" link="#" icon={logoIcon} />
+          <SettingsItem text="Currency" link="#" icon={currencyIcon} />
+          <SettingsItem text="Sync with Blockstack" link="#" icon={syncIcon} />
+          <SettingsItem text="Export Data" link="#" icon={exportIcon} />
         </LeftColumn>
         <LeftColumn>
           <h3>About</h3>
-          <SettingsItem text="Twitter" link="https://twitter.com/lannistercap" icon={logoIcon} />
-          <SettingsItem text="Discord" link="https://discordapp.com/invite/6SrsfUf" icon={logoIcon} />
-          <SettingsItem text="Github" link="https://github.com/lannister-capital/lannister-app" icon={logoIcon} />
+          <SettingsItem text="Twitter" link="https://twitter.com/lannistercap" icon={twitterIcon} />
+          <SettingsItem text="Discord" link="https://discordapp.com/invite/6SrsfUf" icon={discordIcon} />
+          <SettingsItem text="Github" link="https://github.com/lannister-capital/lannister-app" icon={githubIcon} />
         </LeftColumn>
         <Column />
       </FlexColumn>
