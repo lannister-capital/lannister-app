@@ -16,7 +16,9 @@ const Dashboard = () => {
   const [holdings, setHoldings] = useState([])
 
   useEffect(() => {
-    setHoldings(db.read('holdings').value().holdings)
+    const allHoldings = db.read('holdings').value().holdings
+    allHoldings.sort((a, b) => (b.value > a.value) ? 1 : -1)
+    setHoldings(allHoldings)
   }, [])
 
   const totalHoldingsValue = holdings.reduce((a, b) => a + b.value, 0)
@@ -47,7 +49,7 @@ const Dashboard = () => {
           </PieChart>
         </Column>
         <Column>
-          <HoldingsList holdings={holdings} />
+          <HoldingsList holdings={holdings.slice(0, 5)} />
           <LongButton text="See All" />
         </Column>
       </Flex>
