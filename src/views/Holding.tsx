@@ -7,6 +7,7 @@ import { Flex, Column, RightAlignContainer } from '../components/Grid'
 import db from '../db'
 import HoldingModal from '../components/Holdings/HoldingModal'
 import TransactionModal from '../components/Transactions/TransactionModal'
+import TransactionItem from '../components/Transactions/TransactionItem'
 
 const TotalValue = styled.div`
   color: #2a364a;
@@ -16,6 +17,10 @@ const TotalValue = styled.div`
 const ButtonWrapper = styled.div`
   display: inline-block;
   margin-left: 20px;
+`
+
+const Wrapper = styled.div`
+  margin-top: 50px;
 `
 
 const Holding = (props: { match: { params: { id: string } } }) => {
@@ -33,7 +38,7 @@ const Holding = (props: { match: { params: { id: string } } }) => {
     .get('currencies')
     .find({ code: holding.currency })
     .value()
-
+  
   return (
     <div>
       <Flex>
@@ -74,6 +79,13 @@ const Holding = (props: { match: { params: { id: string } } }) => {
               <Cell fill={holding.color} />
             </Pie>
           </PieChart>
+        </Column>
+        <Column>
+          <Wrapper>
+            {holding.transactions.map((transaction: Transaction) => {
+              return <TransactionItem transaction={transaction} currency={holding.currency} />
+            })}
+          </Wrapper>
         </Column>
       </Flex>
 
