@@ -116,7 +116,7 @@ const TransactionModal = (props: ModalProps) => {
 
   return (
     <ReactModal
-      contentLabel="Minimal Modal Example"
+      contentLabel="Transaction Modal"
       style={customStyles}
       closeTimeoutMS={300}
       {...props}>

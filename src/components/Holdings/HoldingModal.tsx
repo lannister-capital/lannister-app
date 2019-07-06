@@ -54,7 +54,7 @@ const ColorInputContainer = styled.div`
   margin-top: 10px;
 `
 
-const currencies = db.get('currencies').value()
+const currencies: [Currency] = db.get('currencies').value()
 
 interface ModalProps {
   holding?: Holding
@@ -115,7 +115,7 @@ const HoldingModal = (props: ModalProps) => {
 
   return (
     <ReactModal
-      contentLabel="Minimal Modal Example"
+      contentLabel="Holding Modal"
       style={customStyles}
       closeTimeoutMS={300}
       {...props}>

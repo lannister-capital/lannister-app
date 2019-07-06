@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const StylelessLink = styled(Link)`
-    text-decoration: none;
+  text-decoration: none;
 `
 
 export const VerticalMiddleContainer = styled.div`
@@ -33,7 +33,6 @@ export const Indicator = styled.div`
     height: 14px;
   }
 `
-
 
 export const ItemContainer = styled.div`
   background-color: #e8ebf4;

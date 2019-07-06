@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import {
-  Wrapper,
-} from '../LongItem'
+import { Wrapper } from '../LongItem'
 
 const StylelessTag = styled.a`
   text-decoration: none;
@@ -11,10 +9,10 @@ const StylelessTag = styled.a`
 `
 
 const SettingsWrapper = styled(Wrapper)`
+  color: #2a364a;
   padding-left: 15px;
   font-size: 18px;
   line-height: 28px;
-  color: #2A364A;
 `
 
 const SettingsItemContainer = styled.div`
@@ -25,7 +23,7 @@ const SettingsItemContainer = styled.div`
   padding-bottom: 10px;
   position: relative;
   width: 100%;
-  border-bottom: 1px solid #7686A2
+  border-bottom: 1px solid #7686a2;
 `
 
 const SettingsIcon = styled.img`
@@ -33,18 +31,39 @@ const SettingsIcon = styled.img`
   width: 30px;
 `
 
-const SettingsItem = ({text, link, icon}) => {
+const RightContainer = styled.div`
+  color: #2a364a;
+  flex: 1;
+  font-size: 18px;
+  line-height: 28px;
+  padding-right: 10px;
+  text-align: right;
+`
+
+const SettingsItem = ({
+  text,
+  link,
+  icon,
+  onClick,
+  rightContent
+}: {
+  text: string
+  link?: string
+  icon: any
+  onClick?: Function
+  rightContent?: string
+}) => {
   return (
-    <StylelessTag href={link}>
+    <StylelessTag href={link || '#'} onClick={() => (onClick ? onClick() : '')}>
       <SettingsItemContainer>
         <SettingsIcon src={icon} alt="Icon" />
         <SettingsWrapper>
           <span>{text}</span>
         </SettingsWrapper>
+        <RightContainer>{rightContent}</RightContainer>
       </SettingsItemContainer>
     </StylelessTag>
   )
 }
-  
+
 export default SettingsItem
-  

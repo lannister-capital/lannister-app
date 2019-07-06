@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import db from '../db'
 import { Flex, Column } from '../components/Grid'
+import CurrencyModal from '../components/Settings/CurrencyModal'
 import SettingsItem from '../components/Settings/SettingsItem'
 import currencyIcon from '../assets/currency.svg'
 import syncIcon from '../assets/sync.svg'
@@ -23,7 +25,14 @@ const LeftColumn = styled(Column)`
   }
 `
 
-const Holdings = () => {
+const Settings = () => {
+  const [openCurrencyModal, setOpenCurrencyModal] = useState(false)
+  const currentGlobalCurrencyCode =
+    localStorage.getItem('globalCurrencyCode') || 'EUR'
+  const currency: Currency = db
+    .get('currencies')
+    .find({ code: currentGlobalCurrencyCode })
+    .value()
 
   return (
     <div>
@@ -35,20 +44,44 @@ const Holdings = () => {
       <FlexColumn>
         <LeftColumn>
           <h3>Local</h3>
-          <SettingsItem text="Currency" link="#" icon={currencyIcon} />
+          <SettingsItem
+            text="Currency"
+            onClick={() => setOpenCurrencyModal(true)}
+            icon={currencyIcon}
+            rightContent={currency.symbol}
+          />
           <SettingsItem text="Sync with Blockstack" link="#" icon={syncIcon} />
           <SettingsItem text="Export Data" link="#" icon={exportIcon} />
         </LeftColumn>
         <LeftColumn>
           <h3>About</h3>
-          <SettingsItem text="Twitter" link="https://twitter.com/lannistercap" icon={twitterIcon} />
-          <SettingsItem text="Discord" link="https://discordapp.com/invite/6SrsfUf" icon={discordIcon} />
-          <SettingsItem text="Github" link="https://github.com/lannister-capital/lannister-app" icon={githubIcon} />
+          <SettingsItem
+            text="Twitter"
+            link="https://twitter.com/lannistercap"
+            icon={twitterIcon}
+          />
+          <SettingsItem
+            text="Discord"
+            link="https://discordapp.com/invite/6SrsfUf"
+            icon={discordIcon}
+          />
+          <SettingsItem
+            text="Github"
+            link="https://github.com/lannister-capital/lannister-app"
+            icon={githubIcon}
+          />
         </LeftColumn>
         <Column />
       </FlexColumn>
+
+      <CurrencyModal
+        currency={currency}
+        isOpen={openCurrencyModal}
+        onCancel={() => setOpenCurrencyModal(false)}
+        onSet={() => setOpenCurrencyModal(false)}
+      />
     </div>
   )
 }
 
-export default Holdings
+export default Settings
