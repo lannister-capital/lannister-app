@@ -96,8 +96,10 @@ const CurrencyModal = (props: ModalProps) => {
         <form>
           <FormGroup>
             {currencies.map(currency => (
-              <CurrencyContainer>
-                <StylelessLink onClick={() => setGlobalCurrency(currency)}>
+              <CurrencyContainer key={currency.code}>
+                <StylelessLink
+                  to="#"
+                  onClick={() => setGlobalCurrency(currency)}>
                   {currency.name} ({currency.symbol})
                 </StylelessLink>
               </CurrencyContainer>
