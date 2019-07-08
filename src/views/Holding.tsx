@@ -38,7 +38,7 @@ const Holding = (props: { match: { params: { id: string } } }) => {
     .get('currencies')
     .find({ code: holding.currency })
     .value()
-  
+
   return (
     <div>
       <Flex>
@@ -82,8 +82,13 @@ const Holding = (props: { match: { params: { id: string } } }) => {
         </Column>
         <Column>
           <Wrapper>
-            {holding.transactions.map((transaction: Transaction) => {
-              return <TransactionItem transaction={transaction} currency={holding.currency} />
+            {(holding.transactions || []).map((transaction: Transaction) => {
+              return (
+                <TransactionItem
+                  transaction={transaction}
+                  currency={holding.currency}
+                />
+              )
             })}
           </Wrapper>
         </Column>

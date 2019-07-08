@@ -5,6 +5,7 @@ import { Flex, Column } from '../components/Grid'
 import HoldingModal from '../components/Holdings/HoldingModal'
 import HoldingsList from '../components/Holdings/HoldingsList'
 import db from '../db'
+import { convertedValue } from '../utils/holding'
 
 const RightAlignContainer = styled.div`
   text-align: right;
@@ -25,7 +26,11 @@ const Holdings = () => {
   const [openHoldingModal, setOpenHoldingModal] = useState(false)
 
   useEffect(() => {
-    setHoldings(db.read('holdings').value().holdings)
+    const allHoldings = db.read('holdings').value().holdings
+    allHoldings.sort((a: Holding, b: Holding) =>
+      convertedValue(b) > convertedValue(a) ? 1 : -1
+    )
+    setHoldings(allHoldings)
   }, [])
 
   const holdingCreated = () => {

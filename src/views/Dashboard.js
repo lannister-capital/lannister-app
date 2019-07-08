@@ -6,6 +6,7 @@ import { Flex, Column } from '../components/Grid'
 import { PieChart, Pie, Cell } from 'recharts'
 import LongButton from '../components/LongButton'
 import db from '../db'
+import { convertedValue } from '../utils/holding'
 
 const TotalValue = styled.div`
   color: #2a364a;
@@ -17,11 +18,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     const allHoldings = db.read('holdings').value().holdings
-    allHoldings.sort((a, b) => (b.value > a.value) ? 1 : -1)
+    allHoldings.sort((a, b) => (convertedValue(b) > convertedValue(a) ? 1 : -1))
     setHoldings(allHoldings)
   }, [])
 
-  const totalHoldingsValue = holdings.reduce((a, b) => a + b.value, 0)
+  const totalHoldingsValue = holdings.reduce((a, b) => a + convertedValue(b), 0)
 
   return (
     <div>
