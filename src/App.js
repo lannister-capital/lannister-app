@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import axios from 'axios'
+import styled from 'styled-components'
 
 import MainContainer from './components/MainContainer'
 import Sidebar from './components/Sidebar'
@@ -7,7 +9,8 @@ import Dashboard from './views/Dashboard'
 import Holdings from './views/Holdings'
 import Holding from './views/Holding'
 import Settings from './views/Settings'
-import styled from 'styled-components'
+
+import db from './db'
 
 import './App.css'
 import './styles/typography.css'
@@ -23,7 +26,25 @@ const LargeColumn = styled(Column)`
   flex: 1;
 `
 
+const currencies = db.get('currencies').value()
+
+const updateExchangeRates = () => {
+  axios.get('https://api.exchangeratesapi.io/latest').then(response => {
+    const rates = response.data.rates
+    currencies.forEach(currency => {
+      db.get('currencies')
+        .find({ code: currency.code })
+        .assign({ euro_rate: rates[currency.code] })
+        .write()
+    })
+  })
+}
+
 function App() {
+  useEffect(() => {
+    updateExchangeRates()
+  }, [])
+
   return (
     <Router>
       <div className="App">
