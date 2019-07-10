@@ -6,9 +6,6 @@ export const convertedValue = (holding: Holding) => {
     .find({ code: holding.currency })
     .value()
 
-<<<<<<< HEAD
-  return holding.value / (currency.euro_rate || 1)
-=======
   // TODO: do not retrieve this everytime but allow immediate updates
   const currentGlobalCurrencyCode =
     localStorage.getItem('globalCurrencyCode') || 'EUR'
@@ -22,5 +19,4 @@ export const convertedValue = (holding: Holding) => {
     euroValue * (globalCurrency.euro_rate || 1)
 
   return Math.round(globalCurrencyValue)
->>>>>>> upstream/master
 }
