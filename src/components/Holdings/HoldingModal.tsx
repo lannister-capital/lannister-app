@@ -35,6 +35,7 @@ const ModalHeader = styled.div`
 
 const CancelButton = styled.button`
   border: none;
+  background-color: #ffffff;
   color: #7686a2;
   cursor: pointer;
   letter-spacing: 0.78px;
