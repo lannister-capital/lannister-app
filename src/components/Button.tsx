@@ -14,6 +14,7 @@ const StyledButton = styled.button<StyledButton>`
   font-weight: 500;
   padding: 20px 40px;
   outline: none;
+  background-color: #ffffff;
 
   &:focus {
     box-shadow: 0px 0px 2px #2a364a;

@@ -44,6 +44,7 @@ const CancelButton = styled.button`
   position: absolute;
   right: 30px;
   top: 20px;
+  background-color: #ffffff;
 `
 
 const ModalBody = styled.div`
