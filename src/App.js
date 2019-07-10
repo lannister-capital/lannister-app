@@ -38,6 +38,22 @@ const updateExchangeRates = () => {
         .write()
     })
   })
+
+  axios.get('https://api.cryptonator.com/api/ticker/eth-eur').then(response => {
+    const rate = response.data.ticker.price
+    db.get('currencies')
+      .find({ code: "ETH"})
+      .assign({ euro_rate: rate })
+      .write()
+  })
+  
+  axios.get('https://api.cryptonator.com/api/ticker/btc-eur').then(response => {
+    const rate = response.data.ticker.price
+    db.get('currencies')
+      .find({ code: "BTC"})
+      .assign({ euro_rate: rate })
+      .write()
+  })
 }
 
 function App() {

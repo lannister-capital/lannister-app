@@ -6,7 +6,5 @@ export const convertedValue = (holding: Holding) => {
     .find({ code: holding.currency })
     .value()
 
-  console.log(currency)
-
   return holding.value / (currency.euro_rate || 1)
 }
