@@ -5,6 +5,7 @@ interface Holding {
   color: string
   currency: string
   transactions?: Array
+  convertedValue?: number
 }
 
 interface Currency {
