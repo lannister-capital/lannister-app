@@ -14,11 +14,25 @@ const TotalValue = styled.div`
 `
 
 const Dashboard = () => {
-  const [holdings, setHoldings] = useState([])
+  const [holdings, setHoldings] = useState<Holding[]>([])
+
+  // TODO: do not retrieve this everytime but allow immediate updates
+  const currentGlobalCurrencyCode =
+    localStorage.getItem('globalCurrencyCode') || 'EUR'
+  const globalCurrency: Currency = db
+    .get('currencies')
+    .find({ code: currentGlobalCurrencyCode })
+    .value()
 
   useEffect(() => {
-    const allHoldings = db.read('holdings').value().holdings
-    allHoldings.sort((a, b) => (convertedValue(b) > convertedValue(a) ? 1 : -1))
+    const allHoldings: [Holding] = db.read('holdings').value().holdings
+    allHoldings.map((holding: Holding) => {
+      holding.convertedValue = convertedValue(holding)
+      return holding
+    })
+    allHoldings.sort((a: Holding, b: Holding) =>
+      b.convertedValue! > a.convertedValue! ? 1 : -1
+    )
     setHoldings(allHoldings)
   }, [])
 
@@ -31,12 +45,12 @@ const Dashboard = () => {
       <Flex>
         <Column>
           <TotalValue>
-            {accounting.formatMoney(totalHoldingsValue, '€')}
+            {accounting.formatMoney(totalHoldingsValue, globalCurrency.symbol)}
           </TotalValue>
           <PieChart width={400} height={400}>
             <Pie
               data={holdings}
-              dataKey="value"
+              dataKey="convertedValue"
               cx={200}
               cy={200}
               innerRadius={70}
