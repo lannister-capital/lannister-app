@@ -10,6 +10,11 @@ import exportIcon from '../assets/export.svg'
 import twitterIcon from '../assets/twitter.svg'
 import discordIcon from '../assets/discord.svg'
 import githubIcon from '../assets/github.svg'
+import {
+  loginWithBlockstack,
+  logoutFromBlockstack,
+  isLoggedIn
+} from '../utils/blockstack'
 
 const FlexColumn = styled(Flex)`
   flex-direction: column;
@@ -50,7 +55,20 @@ const Settings = () => {
             icon={currencyIcon}
             rightContent={currency.symbol}
           />
-          <SettingsItem text="Sync with Blockstack" link="#" icon={syncIcon} />
+          {isLoggedIn() && (
+            <SettingsItem
+              text="Logout from Blockstack"
+              onClick={() => logoutFromBlockstack()}
+              icon={syncIcon}
+            />
+          )}
+          {!isLoggedIn() && (
+            <SettingsItem
+              text="Sync with Blockstack"
+              onClick={() => loginWithBlockstack()}
+              icon={syncIcon}
+            />
+          )}
           <SettingsItem text="Export Data" link="#" icon={exportIcon} />
         </LeftColumn>
         <LeftColumn>

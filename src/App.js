@@ -11,6 +11,7 @@ import Holding from './views/Holding'
 import Settings from './views/Settings'
 
 import db from './db'
+import { handleSignIn } from './utils/blockstack'
 
 import './App.css'
 import './styles/typography.css'
@@ -42,15 +43,15 @@ const updateExchangeRates = () => {
   axios.get('https://api.cryptonator.com/api/ticker/eur-eth').then(response => {
     const rate = response.data.ticker.price
     db.get('currencies')
-      .find({ code: "ETH"})
+      .find({ code: 'ETH' })
       .assign({ euro_rate: rate })
       .write()
   })
-  
+
   axios.get('https://api.cryptonator.com/api/ticker/eur-btc').then(response => {
     const rate = response.data.ticker.price
     db.get('currencies')
-      .find({ code: "BTC"})
+      .find({ code: 'BTC' })
       .assign({ euro_rate: rate })
       .write()
   })
@@ -58,6 +59,7 @@ const updateExchangeRates = () => {
 
 function App() {
   useEffect(() => {
+    handleSignIn()
     updateExchangeRates()
   }, [])
 

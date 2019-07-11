@@ -1,10 +1,10 @@
 import * as blockstack from 'blockstack'
 
-const loginWithBlockstack = () => {
+const userSession = new blockstack.UserSession()
+
+export const loginWithBlockstack = () => {
   const envPath = process.env.NODE_ENV === 'development' ? '-localhost' : ''
   const redirectPath = `/redirect-web${envPath}.html`
-
-  const userSession = new blockstack.UserSession()
   const appDomain = 'https://lannister.capital'
   const transitPrivateKey = userSession.generateAndStoreTransitKey()
   const redirectURI = appDomain + redirectPath
@@ -21,4 +21,17 @@ const loginWithBlockstack = () => {
   blockstack.redirectToSignInWithAuthRequest(authRequest)
 }
 
-export default loginWithBlockstack
+export const handleSignIn = () => {
+  if (userSession.isSignInPending()) {
+    userSession.handlePendingSignIn()
+  }
+}
+
+export const logoutFromBlockstack = () => {
+  const userSession = new blockstack.UserSession()
+  userSession.signUserOut()
+}
+
+export const isLoggedIn = () => {
+  return userSession.isUserSignedIn()
+}
