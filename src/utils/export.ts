@@ -4,16 +4,18 @@ export const exportData = (data) => {
     const fileName = new Date().toISOString().slice(0, 10) + '-data'
 
     // Current list of fields we want to export
-    const fields = ['id', 'name', 'value', 'color', 'currency', 'convertedValue', 'totalValue']
+    const fields = ['id', 'name', 'value', 'color', 
+                    'currency', 'convertedValue', 'totalValueInSetCurrency']
 
-    // Add in the totalValue to make parsing easier in the json.
+    // Add in the totalValue to make parsing easier in the json. Total value is relative to global currency state.
     let totalValue = {
-        'totalValueInGlobalCurrency' : 0
+        'totalValueInSetCurrency' : 0
     }
 
     // Sum the converted value
     data.forEach((obj) => {
-        totalValue['totalValue'] += obj['convertedValue']
+        totalValue['totalValueInSetCurrency'] += obj['convertedValue']
+
     })
     data.push(totalValue)
 
