@@ -18,7 +18,5 @@ export const convertedValue = (holding: Holding) => {
   const globalCurrencyValue: number =
     euroValue * (globalCurrency.euro_rate || 1)
 
-  db.get('currencies').find({ code: holding.currency }).assign({convertedValue: globalCurrencyValue}).write()
-    
   return Math.round(globalCurrencyValue)
 }

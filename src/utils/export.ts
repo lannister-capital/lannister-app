@@ -1,6 +1,9 @@
 import { Parser } from 'json2csv'
+import { convertedValue } from './holding'
 
 export const exportData = (data) => {
+    // Need to make a copy since pass by reference
+    let tempData = [...data]
     const fileName = new Date().toISOString().slice(0, 10) + '-data'
 
     // Current list of fields we want to export
@@ -13,15 +16,16 @@ export const exportData = (data) => {
     }
 
     // Sum the converted value
-    data.forEach((obj) => {
+    tempData.forEach((obj) => {
+        obj['convertedValue'] = convertedValue(obj)
         totalValue['totalValueInSetCurrency'] += obj['convertedValue']
 
     })
-    data.push(totalValue)
+    tempData.push(totalValue)
 
     // Parse the data
     const parser = new Parser({ fields })
-    let csv = parser.parse(data)
+    let csv = parser.parse(tempData)
 
     // Allow it to be downloadable
     let link = document.createElement('a')
