@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import accounting from 'accounting'
 import styled from 'styled-components'
 import HoldingsList from '../components/Holdings/HoldingsList'
 import { Flex, Column } from '../components/Grid'
-import { PieChart, Pie, Cell } from 'recharts'
+import { PieChart, Pie, Cell, Label } from 'recharts'
 import LongButton from '../components/LongButton'
 import db from '../db'
 import { convertedValue } from '../utils/holding'
@@ -14,6 +14,7 @@ const TotalValue = styled.div`
 `
 
 const Dashboard = () => {
+  const [percent, setPercent] = useState('%')
   const [holdings, setHoldings] = useState<Holding[]>([])
 
   // TODO: do not retrieve this everytime but allow immediate updates
@@ -36,6 +37,15 @@ const Dashboard = () => {
     setHoldings(allHoldings)
   }, [])
 
+  const handleMouseOver = useCallback((cell) => {
+    let value = (cell.percent * 100).toFixed(2) + "%"
+    setPercent(value)
+  }, [])
+
+  const handleMouseOut = useCallback(() => {
+    setPercent("%")
+  }, [])
+
   const totalHoldingsValue = holdings.reduce((a, b) => a + convertedValue(b), 0)
 
   return (
@@ -56,7 +66,13 @@ const Dashboard = () => {
               innerRadius={70}
               outerRadius={90}
               fill="#82ca9d"
-              label>
+              label
+              onMouseEnter={handleMouseOver}
+              onMouseOut={handleMouseOut}
+              >
+              <Label fontSize="35" fill="#7686A2" offset={0} position="center">
+                { percent }
+              </Label>
               {holdings.map((holding, index) => (
                 <Cell key={`cell-${index}`} fill={holding.color} />
               ))}
