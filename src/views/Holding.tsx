@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import accounting from 'accounting'
-import { PieChart, Pie, Cell } from 'recharts'
+import { PieChart, Pie, Cell, Label } from 'recharts'
 import Button from '../components/Button'
 import { Flex, Column, RightAlignContainer } from '../components/Grid'
 import db from '../db'
@@ -27,6 +27,7 @@ const Holding = (props: { match: { params: { id: string } } }) => {
   const id = props.match.params.id
   const [openHoldingModal, setOpenHoldingModal] = useState(false)
   const [openTransactionModal, setOpenTransactionModal] = useState(false)
+  const [percent, setPercent] = useState('%')
 
   const holdings = db.read('holdings').value().holdings
   const totalHoldingsValue = holdings.reduce((a, b) => a + b.value, 0)
@@ -38,6 +39,15 @@ const Holding = (props: { match: { params: { id: string } } }) => {
     .get('currencies')
     .find({ code: holding.currency })
     .value()
+  
+  const handleMouseOver = useCallback((cell) => {
+    let value = (cell.percent * 100).toFixed(2) + "%"
+    setPercent(value)
+  }, [])
+
+  const handleMouseOut = useCallback(() => {
+    setPercent("%")
+  }, [])
 
   return (
     <div>
@@ -75,7 +85,12 @@ const Holding = (props: { match: { params: { id: string } } }) => {
               innerRadius={70}
               outerRadius={90}
               fill="#82ca9d"
+              onMouseEnter={handleMouseOver}
+              onMouseOut={handleMouseOut}
               label>
+                <Label fontSize="35" fill="#7686A2" offset={0} position="center">
+                  { percent }
+                </Label>
               <Cell fill={holding.color} />
             </Pie>
           </PieChart>
