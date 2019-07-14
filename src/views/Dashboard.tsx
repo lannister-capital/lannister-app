@@ -8,6 +8,7 @@ import LongButton from '../components/LongButton'
 import db from '../db'
 import { convertedValue } from '../utils/holding'
 
+
 const TotalValue = styled.div`
   color: #2a364a;
   font-size: 28px;
@@ -48,6 +49,13 @@ const Dashboard = () => {
 
   const totalHoldingsValue = holdings.reduce((a, b) => a + convertedValue(b), 0)
 
+  let percentages : Number[] = []
+  // Calling convertedValue here again, because we can't use holding.convertedValue since it's optional in the interface
+  holdings.forEach((holding) => {
+    percentages.push(
+      Math.round((((convertedValue(holding) / totalHoldingsValue) * 100) * 10 ) / 10))
+  })
+
   return (
     <div>
       <h1>Total Portfolio Value</h1>
@@ -82,7 +90,7 @@ const Dashboard = () => {
           </PieChart>
         </Column>
         <Column>
-          <HoldingsList holdings={holdings.slice(0, 5)} />
+          <HoldingsList holdings={holdings.slice(0, 5)} percentages={percentages.slice(0, 5)} />
           <LongButton text="See All" />
         </Column>
       </Flex>

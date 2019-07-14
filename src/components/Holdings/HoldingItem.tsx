@@ -26,9 +26,21 @@ const HoldingTitle = styled(VerticalMiddleContainer)`
   font-size: 18px;
 `
 
-const HoldingTotal = styled(VerticalMiddleContainer)`
+const HoldingValues = styled.div`
+  display: flex;  
+  flex: 1;
+  flex-direction: row
+`
+
+const HoldingTotal = styled.div`
   color: #7686a2;
   font-size: 13px;
+`
+
+const HoldingPercentage = styled.div`
+  color: #7686a2;
+  font-size: 13px;
+  margin-left: 10px;
 `
 
 const HoldingItemContainer = styled(ItemContainer)`
@@ -37,30 +49,38 @@ const HoldingItemContainer = styled(ItemContainer)`
     color: #fff !important;
     cursor: pointer;
 
-    ${HoldingTitle}, ${HoldingTotal}, ${Indicator} {
+    ${HoldingTitle}, ${HoldingPercentage}, ${HoldingTotal}, ${Indicator} {
       color: #fff;
     }
   }
 `
 
-const HoldingItem = ({
-  holding: { id, name, value, color, currency }
-}: {
-  holding: Holding
-}) => {
+interface HoldingItem {
+  holding : Holding
+  percentage : Number
+}
+
+const HoldingItem = ({holding: {id, currency, color, name, value}, percentage}) => {
   const currencySymbol = db
     .get('currencies')
     .find({ code: currency })
     .value()
+
+  console.log(percentage)
   return (
     <StylelessLink to={`/holdings/${id}`}>
       <HoldingItemContainer>
         <ColorStrip color={color} />
         <Wrapper>
           <HoldingTitle>{name}</HoldingTitle>
-          <HoldingTotal>
-            {accounting.formatMoney(value, currencySymbol)}
-          </HoldingTotal>
+          <HoldingValues>
+            <HoldingTotal>
+              {accounting.formatMoney(value, currencySymbol)}
+            </HoldingTotal>
+            <HoldingPercentage>
+              {percentage + '%'}
+            </HoldingPercentage>
+          </HoldingValues>
         </Wrapper>
         <Indicator>
           <img src={forwardIcon} alt="Forward" />

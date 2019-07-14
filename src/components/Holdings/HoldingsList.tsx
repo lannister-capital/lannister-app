@@ -8,15 +8,17 @@ const Container = styled.div`
 
 interface HoldingsList {
   holdings: []
+  percentages: []
   showTitle: boolean
 }
 
-const HoldingsList = ({ holdings, showTitle = true }) => {
+const HoldingsList = ({ holdings, percentages, showTitle = true }) => {
   return (
     <Container>
       {showTitle && <h2>Holdings</h2>}
       {holdings.map((holding, index: number) => {
-        return <HoldingItem holding={holding} key={index} />
+        console.log(percentages[index])
+        return <HoldingItem holding={holding} key={index} percentage={percentages[index]}/>
       })}
     </Container>
   )
