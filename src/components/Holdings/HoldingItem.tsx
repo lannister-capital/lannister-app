@@ -66,7 +66,6 @@ const HoldingItem = ({holding: {id, currency, color, name, value}, percentage}) 
     .find({ code: currency })
     .value()
 
-  console.log(percentage)
   return (
     <StylelessLink to={`/holdings/${id}`}>
       <HoldingItemContainer>

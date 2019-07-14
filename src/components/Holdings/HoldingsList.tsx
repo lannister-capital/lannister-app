@@ -17,7 +17,6 @@ const HoldingsList = ({ holdings, percentages, showTitle = true }) => {
     <Container>
       {showTitle && <h2>Holdings</h2>}
       {holdings.map((holding, index: number) => {
-        console.log(percentages[index])
         return <HoldingItem holding={holding} key={index} percentage={percentages[index]}/>
       })}
     </Container>
