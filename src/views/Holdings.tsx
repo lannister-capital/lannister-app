@@ -38,6 +38,15 @@ const Holdings = () => {
     setHoldings(db.read('holdings').value().holdings)
   }
 
+  const totalHoldingsValue = holdings.reduce((a, b) => a + convertedValue(b), 0)
+  let percentages : Number[] = []
+  // Calling convertedValue here again, because we can't use holding.convertedValue since it's optional in the interface
+  holdings.forEach((holding) => {
+    percentages.push(
+      Math.round((((convertedValue(holding) / totalHoldingsValue) * 100) * 10 ) / 10))
+  })
+  console.log(percentages)  
+
   return (
     <div>
       <Flex>
@@ -54,7 +63,7 @@ const Holdings = () => {
       </Flex>
       <Flex>
         <LeftColumn>
-          <HoldingsList holdings={holdings} showTitle={false} />
+          <HoldingsList holdings={holdings} percentages={percentages} showTitle={false} />
         </LeftColumn>
         <Column />
       </Flex>
