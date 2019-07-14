@@ -37,13 +37,13 @@ const Dashboard = () => {
     setHoldings(allHoldings)
   }, [])
 
-  const handleMouseOver = useCallback((cell) => {
-    let value = (cell.percent * 100).toFixed(2) + "%"
+  const handleMouseOver = useCallback(cell => {
+    let value = (cell.percent * 100).toFixed(2) + '%'
     setPercent(value)
   }, [])
 
   const handleMouseOut = useCallback(() => {
-    setPercent("%")
+    setPercent('%')
   }, [])
 
   const totalHoldingsValue = holdings.reduce((a, b) => a + convertedValue(b), 0)
@@ -55,7 +55,10 @@ const Dashboard = () => {
       <Flex>
         <Column>
           <TotalValue>
-            {accounting.formatMoney(totalHoldingsValue, globalCurrency.symbol)}
+            {accounting.formatMoney(
+              totalHoldingsValue,
+              globalCurrency ? globalCurrency.symbol : '€'
+            )}
           </TotalValue>
           <PieChart width={400} height={400}>
             <Pie
@@ -68,10 +71,9 @@ const Dashboard = () => {
               fill="#82ca9d"
               label
               onMouseEnter={handleMouseOver}
-              onMouseOut={handleMouseOut}
-              >
+              onMouseOut={handleMouseOut}>
               <Label fontSize="35" fill="#7686A2" offset={0} position="center">
-                { percent }
+                {percent}
               </Label>
               {holdings.map((holding, index) => (
                 <Cell key={`cell-${index}`} fill={holding.color} />

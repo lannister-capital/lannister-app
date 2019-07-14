@@ -6,6 +6,7 @@ import Button from '../Button'
 import { FormGroup, Input, SelectInput } from '../Form'
 import db from '../../db'
 import shortid from 'shortid'
+import { uploadDb } from '../../utils/blockstack'
 
 ReactModal.setAppElement('#root')
 
@@ -111,6 +112,7 @@ const HoldingModal = (props: ModalProps) => {
         .push({ id: shortid.generate(), ...holding })
         .write()
     }
+    uploadDb()
     props.onCreate(holding)
   }
 

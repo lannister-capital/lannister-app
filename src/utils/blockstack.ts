@@ -1,4 +1,5 @@
 import * as blockstack from 'blockstack'
+import db from '../db'
 
 const userSession = new blockstack.UserSession()
 
@@ -21,9 +22,44 @@ export const loginWithBlockstack = () => {
   blockstack.redirectToSignInWithAuthRequest(authRequest)
 }
 
+export const syncDb = () => {
+  console.log('sync db')
+  if (userSession.isUserSignedIn()) {
+    blockstack.getFile('db.json').then(file => {
+      if (file) {
+        downloadDb()
+      } else {
+        uploadDb()
+      }
+    })
+  }
+}
+
+export const uploadDb = () => {
+  if (userSession.isUserSignedIn()) {
+    const syncDb = db.getState()
+
+    blockstack
+      .putFile('db.json', JSON.stringify(syncDb), { encrypt: true })
+      .then(_ => {
+        console.log('Written to Blockstack')
+      })
+  }
+}
+
+export const downloadDb = () => {
+  if (userSession.isUserSignedIn()) {
+    blockstack.getFile('db.json').then(file => {
+      db.setState(JSON.parse(String(file))).write()
+    })
+  }
+}
+
 export const handleSignIn = () => {
   if (userSession.isSignInPending()) {
-    userSession.handlePendingSignIn()
+    userSession.handlePendingSignIn().then(_ => {
+      syncDb()
+    })
   }
 }
 

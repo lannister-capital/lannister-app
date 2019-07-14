@@ -11,7 +11,7 @@ import Holding from './views/Holding'
 import Settings from './views/Settings'
 
 import db from './db'
-import { handleSignIn } from './utils/blockstack'
+import { handleSignIn, syncDb } from './utils/blockstack'
 
 import './App.css'
 import './styles/typography.css'
@@ -61,6 +61,7 @@ function App() {
   useEffect(() => {
     handleSignIn()
     updateExchangeRates()
+    syncDb()
   }, [])
 
   return (

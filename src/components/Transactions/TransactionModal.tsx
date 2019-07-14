@@ -5,6 +5,7 @@ import Button from '../Button'
 import { FormGroup, Input, SelectInput } from '../Form'
 import db from '../../db'
 import shortid from 'shortid'
+import { uploadDb } from '../../utils/blockstack'
 
 ReactModal.setAppElement('#root')
 
@@ -111,6 +112,7 @@ const TransactionModal = (props: ModalProps) => {
       .find({ id: props.holding.id })
       .assign({ ...dbHolding })
       .write()
+    uploadDb()
     props.onCreate(transaction)
   }
 
