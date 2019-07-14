@@ -8,7 +8,6 @@ import LongButton from '../components/LongButton'
 import db from '../db'
 import { convertedValue } from '../utils/holding'
 
-
 const TotalValue = styled.div`
   color: #2a364a;
   font-size: 28px;
