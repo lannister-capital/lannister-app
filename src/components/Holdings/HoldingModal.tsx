@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import styled from 'styled-components'
 import ReactModal from 'react-modal'
 import { CirclePicker } from 'react-color'
@@ -73,9 +73,10 @@ interface ModalProps {
   onCancel: Function
   isOpen: Boolean
   onRequestClose?: Function
+  history: RouteComponentProps
 }
 
-const HoldingModal = (props) => {
+const HoldingModal = (props: ModalProps) => {
   const [holding, setHolding] = useState({
     name: '',
     currency: 'USD',
