@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import ReactModal from 'react-modal'
 import { CirclePicker } from 'react-color'
@@ -75,15 +75,13 @@ interface ModalProps {
   onRequestClose?: Function
 }
 
-const HoldingModal = (props: ModalProps) => {
+const HoldingModal = (props) => {
   const [holding, setHolding] = useState({
     name: '',
     currency: 'USD',
     value: 0,
     color: ''
   })
-
-  const [redirect, setRedirect] = useState(false)
 
   useEffect(() => {
     if (props.holding) {
@@ -133,7 +131,7 @@ const HoldingModal = (props: ModalProps) => {
       .remove({id : props.holding.id})
       .write()
     } 
-    setRedirect(true)
+    props.history.push('/')
   }
 
   return (
@@ -204,8 +202,7 @@ const HoldingModal = (props: ModalProps) => {
             <Button primary type="submit">
               Save
             </Button>
-            <TrashCan src={trashIcon} onClick={() => deleteHolding()} alt="Icon"/>
-            { redirect ? <Redirect to="/" /> : ''}
+            { props.holding ? <TrashCan src={trashIcon} onClick={() => deleteHolding()} alt="Icon"/> : '' }
           </div>
         </form>
       </ModalBody>
@@ -213,4 +210,4 @@ const HoldingModal = (props: ModalProps) => {
   )
 }
 
-export default HoldingModal
+export default withRouter(HoldingModal)
