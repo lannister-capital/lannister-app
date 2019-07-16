@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import ReactModal from 'react-modal'
 import { CirclePicker } from 'react-color'
@@ -7,6 +8,7 @@ import { FormGroup, Input, SelectInput } from '../Form'
 import db from '../../db'
 import shortid from 'shortid'
 import { uploadDb } from '../../utils/blockstack'
+import trashIcon from '../../assets/trashcan.svg'
 
 ReactModal.setAppElement('#root')
 
@@ -48,6 +50,13 @@ const CancelButton = styled.button`
   top: 20px;
 `
 
+const TrashCan = styled.img`
+  position: absolute;
+  right: 55px;
+  bottom: 60px;
+  cursor: pointer;
+`
+
 const ModalBody = styled.div`
   padding: 40px;
 `
@@ -73,6 +82,8 @@ const HoldingModal = (props: ModalProps) => {
     value: 0,
     color: ''
   })
+
+  const [redirect, setRedirect] = useState(false)
 
   useEffect(() => {
     if (props.holding) {
@@ -114,6 +125,15 @@ const HoldingModal = (props: ModalProps) => {
     }
     uploadDb()
     props.onCreate(holding)
+  }
+
+  const deleteHolding = () => {
+    if (props.holding) {
+      db.get('holdings')
+      .remove({id : props.holding.id})
+      .write()
+    } 
+    setRedirect(true)
   }
 
   return (
@@ -184,6 +204,8 @@ const HoldingModal = (props: ModalProps) => {
             <Button primary type="submit">
               Save
             </Button>
+            <TrashCan src={trashIcon} onClick={() => deleteHolding()} alt="Icon"/>
+            { redirect ? <Redirect to="/" /> : ''}
           </div>
         </form>
       </ModalBody>
