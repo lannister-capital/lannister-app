@@ -71,12 +71,13 @@ interface ModalProps {
   holding?: Holding
   onCreate: Function
   onCancel: Function
-  isOpen: Boolean
-  onRequestClose?: Function
+  isOpen: boolean
   history: RouteComponentProps
 }
 
-const HoldingModal = (props: ModalProps) => {
+const HoldingModal: React.SFC<ModalProps & ReactModal.Props> = (
+  props: ModalProps
+) => {
   const [holding, setHolding] = useState({
     name: '',
     currency: 'USD',

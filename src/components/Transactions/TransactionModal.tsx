@@ -55,11 +55,12 @@ interface ModalProps {
   holding: Holding
   onCreate: Function
   onCancel: Function
-  isOpen: Boolean
-  onRequestClose?: Function
+  isOpen: boolean
 }
 
-const TransactionModal = (props: ModalProps) => {
+const TransactionModal: React.SFC<ModalProps & ReactModal.Props> = (
+  props: ModalProps
+) => {
   const [transaction, setTransaction] = useState({
     name: '',
     value: 0,

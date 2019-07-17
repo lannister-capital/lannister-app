@@ -67,10 +67,10 @@ interface ModalProps {
   currency: Currency
   onSet: Function
   onCancel: Function
-  isOpen: Boolean
+  isOpen: boolean
 }
 
-const CurrencyModal = (props: ModalProps) => {
+const CurrencyModal: React.SFC<ModalProps & ReactModal.Props> = props => {
   const setGlobalCurrency = (currency: Currency) => {
     localStorage.setItem('globalCurrencyCode', currency.code)
     props.onSet()
