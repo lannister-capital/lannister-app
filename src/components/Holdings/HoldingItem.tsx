@@ -29,7 +29,7 @@ const HoldingTitle = styled(VerticalMiddleContainer)`
 const HoldingValues = styled.div`
   display: flex;  
   flex: 1;
-  flex-direction: row
+  flex-direction: row;
 `
 
 const HoldingTotal = styled.div`
