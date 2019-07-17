@@ -129,10 +129,11 @@ const HoldingModal = (props: ModalProps) => {
   const deleteHolding = () => {
     if (props.holding) {
       db.get('holdings')
-      .remove({id : props.holding.id})
-      .write()
-    } 
-    props.history.push('/')
+        .remove({ id: props.holding.id })
+        .write()
+    }
+    uploadDb()
+    props.history.push('/holdings')
   }
 
   return (
@@ -203,7 +204,15 @@ const HoldingModal = (props: ModalProps) => {
             <Button primary type="submit">
               Save
             </Button>
-            { props.holding ? <TrashCan src={trashIcon} onClick={() => deleteHolding()} alt="Icon"/> : '' }
+            {props.holding ? (
+              <TrashCan
+                src={trashIcon}
+                onClick={() => deleteHolding()}
+                alt="Icon"
+              />
+            ) : (
+              ''
+            )}
           </div>
         </form>
       </ModalBody>

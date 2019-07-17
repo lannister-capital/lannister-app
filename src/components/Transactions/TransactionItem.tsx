@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import accounting from 'accounting'
 import {
-  StylelessLink,
   Wrapper,
   VerticalMiddleContainer,
   Indicator,
@@ -56,7 +55,7 @@ const TransactionItem = ({
   transaction: { id, name, value, type, date },
   currency
 }: {
-  transaction: Transaction,
+  transaction: Transaction
   currency: string
 }) => {
   const currencySymbol = db
@@ -64,18 +63,18 @@ const TransactionItem = ({
     .find({ code: currency })
     .value()
   return (
-    <StylelessLink>
+    <>
       <TransactionItemContainer>
-        <ColorStrip color={ type === 'credit' ? '#00B382' : '#E60243' } />
+        <ColorStrip color={type === 'credit' ? '#00B382' : '#E60243'} />
         <Wrapper>
           <TransactionTitle>{name}</TransactionTitle>
         </Wrapper>
-        <ValueWrapper color={ type === 'credit' ? '#00B382' : '#E60243'}>
+        <ValueWrapper color={type === 'credit' ? '#00B382' : '#E60243'}>
           {type === 'credit' ? '+ ' : '- '}
           {accounting.formatMoney(value, currencySymbol)}
         </ValueWrapper>
       </TransactionItemContainer>
-    </StylelessLink>
+    </>
   )
 }
 
