@@ -40,14 +40,21 @@ const RightContainer = styled.div`
   text-align: right;
 `
 
+const Subtext = styled.div`
+  font-size: 11px;
+  line-height: 12px;
+`
+
 const SettingsItem = ({
   text,
+  subtext,
   link,
   icon,
   onClick,
   rightContent
 }: {
   text: string
+  subtext?: string
   link?: string
   icon: any
   onClick?: Function
@@ -59,6 +66,7 @@ const SettingsItem = ({
         <SettingsIcon src={icon} alt="Icon" />
         <SettingsWrapper>
           <span>{text}</span>
+          <Subtext>{subtext}</Subtext>
         </SettingsWrapper>
         <RightContainer>{rightContent}</RightContainer>
       </SettingsItemContainer>

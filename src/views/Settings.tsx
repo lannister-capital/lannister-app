@@ -15,9 +15,7 @@ import {
   logoutFromBlockstack,
   isLoggedIn
 } from '../utils/blockstack'
-import {
-  exportData
-} from '../utils/export'
+import { exportData } from '../utils/export'
 
 const FlexColumn = styled(Flex)`
   flex-direction: column;
@@ -42,9 +40,7 @@ const Settings = () => {
     .find({ code: currentGlobalCurrencyCode })
     .value()
 
-  const holdings = db
-    .get('holdings')
-    .value()
+  const holdings = db.get('holdings').value()
 
   return (
     <div>
@@ -72,15 +68,16 @@ const Settings = () => {
           {!isLoggedIn() && (
             <SettingsItem
               text="Sync with Blockstack"
+              subtext="(beta, does not sync with mobile version)"
               onClick={() => loginWithBlockstack()}
               icon={syncIcon}
             />
           )}
-          <SettingsItem 
-            text="Export Data" 
+          <SettingsItem
+            text="Export Data"
             link="#"
-            onClick={() => exportData(holdings)} 
-            icon={exportIcon} 
+            onClick={() => exportData(holdings)}
+            icon={exportIcon}
           />
         </LeftColumn>
         <LeftColumn>
