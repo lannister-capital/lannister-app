@@ -80,7 +80,7 @@ const HoldingModal: React.SFC<ModalProps & ReactModal.Props> = (
 ) => {
   const [holding, setHolding] = useState({
     name: '',
-    currency: 'USD',
+    currency_code: 'USD',
     value: 0,
     color: ''
   })
@@ -168,9 +168,9 @@ const HoldingModal: React.SFC<ModalProps & ReactModal.Props> = (
           <FormGroup>
             <label>Currency</label>
             <SelectInput
-              name="currency"
+              name="currency_code"
               onChange={e => handleInputChange(e)}
-              value={holding.currency}>
+              value={holding.currency_code}>
               {currencies.map((currency: Currency) => {
                 return (
                   <option key={currency.code} value={currency.code}>

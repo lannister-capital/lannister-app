@@ -3,7 +3,7 @@ interface Holding {
   name: string
   value: number
   color: string
-  currency: string
+  currency_code: string
   transactions?: Array
   convertedValue?: number
 }

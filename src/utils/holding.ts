@@ -3,7 +3,7 @@ import db from '../db'
 export const convertedValue = (holding: Holding) => {
   const currency: Currency = db
     .get('currencies')
-    .find({ code: holding.currency })
+    .find({ code: holding.currency_code })
     .value()
 
   // TODO: do not retrieve this everytime but allow immediate updates

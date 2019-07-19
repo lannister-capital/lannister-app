@@ -60,10 +60,10 @@ interface HoldingItem {
   percentage : Number
 }
 
-const HoldingItem = ({holding: {id, currency, color, name, value}, percentage}) => {
+const HoldingItem = ({holding: {id, currency_code, color, name, value}, percentage}) => {
   const currencySymbol = db
     .get('currencies')
-    .find({ code: currency })
+    .find({ code: currency_code })
     .value()
 
   return (

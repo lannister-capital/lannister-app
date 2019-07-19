@@ -31,22 +31,22 @@ const Holding = (props: { match: { params: { id: string } } }) => {
 
   const holdings = db.read('holdings').value().holdings
   const totalHoldingsValue = holdings.reduce((a, b) => a + b.value, 0)
-  const holding = db
+  const holding: Holding = db
     .get('holdings')
     .find({ id: id })
     .value()
   const currencySymbol = db
     .get('currencies')
-    .find({ code: holding.currency })
+    .find({ code: holding.currency_code })
     .value()
-  
-  const handleMouseOver = useCallback((cell) => {
-    let value = (cell.percent * 100).toFixed(2) + "%"
+
+  const handleMouseOver = useCallback(cell => {
+    let value = (cell.percent * 100).toFixed(2) + '%'
     setPercent(value)
   }, [])
 
   const handleMouseOut = useCallback(() => {
-    setPercent("%")
+    setPercent('%')
   }, [])
 
   return (
@@ -88,9 +88,9 @@ const Holding = (props: { match: { params: { id: string } } }) => {
               onMouseEnter={handleMouseOver}
               onMouseOut={handleMouseOut}
               label>
-                <Label fontSize="35" fill="#7686A2" offset={0} position="center">
-                  { percent }
-                </Label>
+              <Label fontSize="35" fill="#7686A2" offset={0} position="center">
+                {percent}
+              </Label>
               <Cell fill={holding.color} />
             </Pie>
           </PieChart>
@@ -101,7 +101,7 @@ const Holding = (props: { match: { params: { id: string } } }) => {
               return (
                 <TransactionItem
                   transaction={transaction}
-                  currency={holding.currency}
+                  currency_code={holding.currency_code}
                 />
               )
             })}

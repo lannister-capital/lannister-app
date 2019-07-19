@@ -53,14 +53,14 @@ const ValueWrapper = styled(Indicator)`
 
 const TransactionItem = ({
   transaction: { id, name, value, type, date },
-  currency
+  currency_code
 }: {
   transaction: Transaction
-  currency: string
+  currency_code: string
 }) => {
   const currencySymbol = db
     .get('currencies')
-    .find({ code: currency })
+    .find({ code: currency_code })
     .value()
   return (
     <>
