@@ -8,6 +8,7 @@ import db from '../db'
 import HoldingModal from '../components/Holdings/HoldingModal'
 import TransactionModal from '../components/Transactions/TransactionModal'
 import TransactionItem from '../components/Transactions/TransactionItem'
+import { convertedValue } from '../utils/holding'
 
 const TotalValue = styled.div`
   color: #2a364a;
@@ -30,15 +31,29 @@ const Holding = (props: { match: { params: { id: string } } }) => {
   const [percent, setPercent] = useState('%')
 
   const holdings = db.read('holdings').value().holdings
-  const totalHoldingsValue = holdings.reduce((a, b) => a + b.value, 0)
+  const totalHoldingsValue = holdings.reduce(
+    (a: number, b: Holding) => a + convertedValue(b),
+    0
+  )
   const holding: Holding = db
     .get('holdings')
     .find({ id: id })
     .value()
+  holding.convertedValue = convertedValue(holding)
   const currencySymbol = db
     .get('currencies')
     .find({ code: holding.currency_code })
     .value()
+
+  const currentGlobalCurrencyCode =
+    localStorage.getItem('globalCurrencyCode') || 'EUR'
+  const globalCurrency: Currency = db
+    .get('currencies')
+    .find({ code: currentGlobalCurrencyCode })
+    .value()
+  const customLabel = ({ value }) => {
+    return accounting.formatMoney(value, globalCurrency.symbol)
+  }
 
   const handleMouseOver = useCallback(cell => {
     let value = (cell.percent * 100).toFixed(2) + '%'
@@ -78,8 +93,11 @@ const Holding = (props: { match: { params: { id: string } } }) => {
           </TotalValue>
           <PieChart width={400} height={400}>
             <Pie
-              data={[holding, { value: totalHoldingsValue - holding.value }]}
-              dataKey="value"
+              data={[
+                holding,
+                { convertedValue: totalHoldingsValue - holding.convertedValue }
+              ]}
+              dataKey="convertedValue"
               cx={200}
               cy={200}
               innerRadius={70}
@@ -87,7 +105,7 @@ const Holding = (props: { match: { params: { id: string } } }) => {
               fill="#82ca9d"
               onMouseEnter={handleMouseOver}
               onMouseOut={handleMouseOut}
-              label>
+              label={customLabel}>
               <Label fontSize="35" fill="#7686A2" offset={0} position="center">
                 {percent}
               </Label>

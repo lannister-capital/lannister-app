@@ -48,12 +48,20 @@ const Dashboard = () => {
 
   const totalHoldingsValue = holdings.reduce((a, b) => a + convertedValue(b), 0)
 
-  let percentages : Number[] = []
-  // Calling convertedValue here again, because we can't use holding.convertedValue since it's optional in the interface
-  holdings.forEach((holding) => {
+  let percentages: Number[] = []
+  // Calling convertedValue here again, because we can't use holding.convertedValue
+  // since it's optional in the interface
+  holdings.forEach(holding => {
     percentages.push(
-      Math.round((((convertedValue(holding) / totalHoldingsValue) * 100) * 10 ) / 10))
+      Math.round(
+        ((convertedValue(holding) / totalHoldingsValue) * 100 * 10) / 10
+      )
+    )
   })
+
+  const customLabel = ({ value }) => {
+    return accounting.formatMoney(value, globalCurrency.symbol)
+  }
 
   return (
     <div>
@@ -76,7 +84,7 @@ const Dashboard = () => {
               innerRadius={70}
               outerRadius={90}
               fill="#82ca9d"
-              label
+              label={customLabel}
               onMouseEnter={handleMouseOver}
               onMouseOut={handleMouseOut}>
               <Label fontSize="35" fill="#7686A2" offset={0} position="center">
@@ -89,7 +97,10 @@ const Dashboard = () => {
           </PieChart>
         </Column>
         <Column>
-          <HoldingsList holdings={holdings.slice(0, 5)} percentages={percentages.slice(0, 5)} />
+          <HoldingsList
+            holdings={holdings.slice(0, 5)}
+            percentages={percentages.slice(0, 5)}
+          />
           <LongButton text="See All" />
         </Column>
       </Flex>
