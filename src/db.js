@@ -24,7 +24,8 @@ db.defaults({
       currency_code: 'EUR'
     }
   ],
-  currencies
+  currencies,
+  db_version: '0.1'
 }).write()
 
 // Example write
