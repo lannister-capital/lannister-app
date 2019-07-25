@@ -82,7 +82,7 @@ const HoldingModal: React.SFC<ModalProps & ReactModal.Props> = (
     name: '',
     currency_code: 'USD',
     value: 0,
-    color: ''
+    hex_color: ''
   })
 
   useEffect(() => {
@@ -106,7 +106,7 @@ const HoldingModal: React.SFC<ModalProps & ReactModal.Props> = (
   }
 
   const handleColorChange = (color: { hex: string }) => {
-    setHolding({ ...holding, color: color.hex })
+    setHolding({ ...holding, hex_color: color.hex })
   }
 
   const createHolding = (event: React.SyntheticEvent) => {
@@ -193,7 +193,7 @@ const HoldingModal: React.SFC<ModalProps & ReactModal.Props> = (
             <label>Color</label>
             <ColorInputContainer>
               <CirclePicker
-                color={holding.color}
+                color={holding.hex_color}
                 onChangeComplete={handleColorChange}
                 width="100%"
                 circleSize={20}

@@ -11,7 +11,7 @@ export const exportData = data => {
     'id',
     'name',
     'value',
-    'color',
+    'hex_color',
     'currency_code',
     'convertedValue',
     'totalValueInSetCurrency'

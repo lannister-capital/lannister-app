@@ -109,7 +109,7 @@ const Holding = (props: { match: { params: { id: string } } }) => {
               <Label fontSize="35" fill="#7686A2" offset={0} position="center">
                 {percent}
               </Label>
-              <Cell fill={holding.color} />
+              <Cell fill={holding.hex_color} />
             </Pie>
           </PieChart>
         </Column>

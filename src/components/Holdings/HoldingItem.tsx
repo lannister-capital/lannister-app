@@ -60,7 +60,7 @@ interface HoldingItem {
   percentage : Number
 }
 
-const HoldingItem = ({holding: {id, currency_code, color, name, value}, percentage}) => {
+const HoldingItem = ({holding: {id, currency_code, hex_color, name, value}, percentage}) => {
   const currencySymbol = db
     .get('currencies')
     .find({ code: currency_code })
@@ -69,7 +69,7 @@ const HoldingItem = ({holding: {id, currency_code, color, name, value}, percenta
   return (
     <StylelessLink to={`/holdings/${id}`}>
       <HoldingItemContainer>
-        <ColorStrip color={color} />
+        <ColorStrip color={hex_color} />
         <Wrapper>
           <HoldingTitle>{name}</HoldingTitle>
           <HoldingValues>

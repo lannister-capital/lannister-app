@@ -91,7 +91,7 @@ const Dashboard = () => {
                 {percent}
               </Label>
               {holdings.map((holding, index) => (
-                <Cell key={`cell-${index}`} fill={holding.color} />
+                <Cell key={`cell-${index}`} fill={holding.hex_color} />
               ))}
             </Pie>
           </PieChart>

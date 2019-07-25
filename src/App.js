@@ -38,6 +38,8 @@ const updateExchangeRates = () => {
         .assign({ euro_rate: rates[currency.code] })
         .write()
     })
+  }).catch(error => {
+    console.log("Error getting exchange rate")
   })
 
   axios.get('https://api.cryptonator.com/api/ticker/eur-eth').then(response => {
@@ -46,6 +48,8 @@ const updateExchangeRates = () => {
       .find({ code: 'ETH' })
       .assign({ euro_rate: rate })
       .write()
+  }).catch(error => {
+    console.log("Error getting ticker")
   })
 
   axios.get('https://api.cryptonator.com/api/ticker/eur-btc').then(response => {
@@ -54,6 +58,8 @@ const updateExchangeRates = () => {
       .find({ code: 'BTC' })
       .assign({ euro_rate: rate })
       .write()
+  }).catch(error => {
+    console.log("Error getting ticker")
   })
 }
 
