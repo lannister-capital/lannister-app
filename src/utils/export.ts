@@ -1,10 +1,11 @@
 import { Parser } from 'json2csv'
 import { convertedValue } from './holding'
+import { saveAs } from 'file-saver'
 
 export const exportData = data => {
   // Need to make a copy since pass by reference
   let tempData = [...data]
-  const fileName = new Date().toISOString().slice(0, 10) + '-data'
+  const fileName = new Date().toISOString().slice(0, 10) + '-data.csv'
 
   // Current list of fields we want to export
   const fields = [
@@ -33,15 +34,7 @@ export const exportData = data => {
   const parser = new Parser({ fields })
   let csv = parser.parse(tempData)
 
-  // Allow it to be downloadable
-  let link = document.createElement('a')
-  link.setAttribute(
-    'href',
-    'data:text/csv;charset=utf-8,' + encodeURIComponent(csv)
-  )
-  link.setAttribute('download', fileName)
-  link.style.visibility = 'hidden'
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
+  // Download it
+  var blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
+  saveAs(blob, fileName);
 }
