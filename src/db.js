@@ -24,9 +24,12 @@ db.defaults({
       currency_code: 'EUR'
     }
   ],
-  currencies,
   db_version: '0.1'
 }).write()
+
+if (!db.get('currencies').value()) {
+  db.set('currencies', currencies).write()
+}
 
 // Example write
 // db.get('holdings')

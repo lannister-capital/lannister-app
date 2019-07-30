@@ -45,7 +45,6 @@ const Holdings = () => {
     percentages.push(
       Math.round((((convertedValue(holding) / totalHoldingsValue) * 100) * 10 ) / 10))
   })
-  console.log(percentages)  
 
   return (
     <div>

@@ -120,6 +120,7 @@ const Holding = (props: { match: { params: { id: string } } }) => {
                 <TransactionItem
                   transaction={transaction}
                   currency_code={holding.currency_code}
+                  key={transaction.name}
                 />
               )
             })}

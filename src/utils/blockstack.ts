@@ -50,7 +50,9 @@ export const uploadDb = () => {
 export const downloadDb = () => {
   if (userSession.isUserSignedIn()) {
     blockstack.getFile('db.json').then(file => {
-      db.setState(JSON.parse(String(file))).write()
+      const syncedInfo = JSON.parse(String(file))
+      db.set('holdings', syncedInfo.holdings).write()
+      db.set('db_version', syncedInfo.db_version).write()
     })
   }
 }
