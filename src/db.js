@@ -24,7 +24,7 @@ db.defaults({
       currency_code: 'EUR'
     }
   ],
-  db_version: '0.1'
+  db_version: '1.0.0'
 }).write()
 
 if (!db.get('currencies').value()) {
