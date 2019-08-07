@@ -182,10 +182,9 @@ const HoldingModal: React.SFC<ModalProps & ReactModal.Props> = (
           </FormGroup>
           <FormGroup>
             <label>Total Value</label>
-            <input
+            <Input
               name="value"
               type="number"
-              step="0.01"
               min="0"
               onChange={handleValueChange}
               value={holding.value}
