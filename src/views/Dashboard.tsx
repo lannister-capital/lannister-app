@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import accounting from 'accounting'
 import styled from 'styled-components'
+import Button from '../components/Button'
+import HoldingModal from '../components/Holdings/HoldingModal'
 import HoldingsList from '../components/Holdings/HoldingsList'
 import { Flex, Column } from '../components/Grid'
 import { PieChart, Pie, Cell, Label } from 'recharts'
@@ -13,9 +15,14 @@ const TotalValue = styled.div`
   font-size: 28px;
 `
 
+const EmptyCTAButton = styled(Button)`
+  margin-top: 20px;
+`
+
 const Dashboard = () => {
   const [percent, setPercent] = useState('%')
   const [holdings, setHoldings] = useState<Holding[]>([])
+  const [openHoldingModal, setOpenHoldingModal] = useState(false)
 
   // TODO: do not retrieve this everytime but allow immediate updates
   const currentGlobalCurrencyCode =
@@ -59,6 +66,11 @@ const Dashboard = () => {
     )
   })
 
+  const holdingCreated = () => {
+    setOpenHoldingModal(false)
+    setHoldings(db.read('holdings').value().holdings)
+  }
+
   const customLabel = ({ value }) => {
     return accounting.formatMoney(value, globalCurrency.symbol)
   }
@@ -69,41 +81,64 @@ const Dashboard = () => {
 
       <Flex>
         <Column>
-          <TotalValue>
-            {accounting.formatMoney(
-              totalHoldingsValue,
-              globalCurrency ? globalCurrency.symbol : '€'
-            )}
-          </TotalValue>
-          <PieChart width={400} height={400}>
-            <Pie
-              data={holdings}
-              dataKey="convertedValue"
-              cx={200}
-              cy={200}
-              innerRadius={70}
-              outerRadius={90}
-              fill="#82ca9d"
-              label={customLabel}
-              onMouseEnter={handleMouseOver}
-              onMouseOut={handleMouseOut}>
-              <Label fontSize="35" fill="#7686A2" offset={0} position="center">
-                {percent}
-              </Label>
-              {holdings.map((holding, index) => (
-                <Cell key={`cell-${index}`} fill={holding.hex_color} />
-              ))}
-            </Pie>
-          </PieChart>
+          {holdings.length > 0 ? (
+            <>
+              <TotalValue>
+                {accounting.formatMoney(
+                  totalHoldingsValue,
+                  globalCurrency ? globalCurrency.symbol : '€'
+                )}
+              </TotalValue>
+              <PieChart width={400} height={400}>
+                <Pie
+                  data={holdings}
+                  dataKey="convertedValue"
+                  cx={200}
+                  cy={200}
+                  innerRadius={70}
+                  outerRadius={90}
+                  fill="#82ca9d"
+                  label={customLabel}
+                  onMouseEnter={handleMouseOver}
+                  onMouseOut={handleMouseOut}>
+                  <Label
+                    fontSize="35"
+                    fill="#7686A2"
+                    offset={0}
+                    position="center">
+                    {percent}
+                  </Label>
+                  {holdings.map((holding, index) => (
+                    <Cell key={`cell-${index}`} fill={holding.hex_color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </>
+          ) : (
+            <>
+              <EmptyCTAButton onClick={() => setOpenHoldingModal(true)}>
+                Create your first holding
+              </EmptyCTAButton>
+            </>
+          )}
         </Column>
-        <Column>
-          <HoldingsList
-            holdings={holdings.slice(0, 5)}
-            percentages={percentages.slice(0, 5)}
-          />
-          <LongButton text="See All" />
-        </Column>
+        {holdings.length > 0 && (
+          <Column>
+            <HoldingsList
+              holdings={holdings.slice(0, 5)}
+              percentages={percentages.slice(0, 5)}
+            />
+            <LongButton text="See All" />
+          </Column>
+        )}
       </Flex>
+
+      <HoldingModal
+        isOpen={openHoldingModal}
+        onRequestClose={() => setOpenHoldingModal(false)}
+        onCancel={() => setOpenHoldingModal(false)}
+        onCreate={() => holdingCreated()}
+      />
     </div>
   )
 }
