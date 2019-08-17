@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar'
 import Dashboard from './views/Dashboard'
 import Holdings from './views/Holdings'
 import Holding from './views/Holding'
+import Recommendations from './views/Recommendations'
 import Settings from './views/Settings'
 
 import db from './db'
@@ -81,6 +82,7 @@ function App() {
             <Route path="/" exact component={Dashboard} />
             <Route path="/holdings" exact component={Holdings} />
             <Route path="/holdings/:id" exact component={Holding} />
+            <Route path="/recommendations" exact component={Recommendations} />
             <Route path="/settings" exact component={Settings} />
           </MainContainer>
         </LargeColumn>
