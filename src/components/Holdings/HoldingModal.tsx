@@ -102,7 +102,7 @@ const HoldingModal: React.SFC<ModalProps & ReactModal.Props> = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.currentTarget
-    setHolding({ ...holding, [name]: parseInt(value) })
+    setHolding({ ...holding, [name]: parseFloat(value) })
   }
 
   const handleColorChange = (color: { hex: string }) => {
@@ -186,6 +186,7 @@ const HoldingModal: React.SFC<ModalProps & ReactModal.Props> = (
               name="value"
               type="number"
               min="0"
+              step="0.01"
               onChange={handleValueChange}
               value={holding.value}
             />
