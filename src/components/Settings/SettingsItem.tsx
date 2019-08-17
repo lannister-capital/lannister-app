@@ -1,16 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Wrapper } from '../LongItem'
-
 const StylelessTag = styled.a`
   text-decoration: none;
   display: flex;
 `
 
-const SettingsWrapper = styled(Wrapper)`
+const SettingsWrapper = styled.div`
   color: #2a364a;
-  padding-left: 15px;
+  padding-left: 16px;
   font-size: 18px;
   line-height: 28px;
 `

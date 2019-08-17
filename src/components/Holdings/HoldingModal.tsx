@@ -8,7 +8,7 @@ import { FormGroup, Input, SelectInput } from '../Form'
 import db from '../../db'
 import shortid from 'shortid'
 import { uploadDb } from '../../utils/blockstack'
-import trashIcon from '../../assets/trashcan.svg'
+import trashIcon from '../../assets/trash.svg'
 
 ReactModal.setAppElement('#root')
 
@@ -50,7 +50,7 @@ const CancelButton = styled.button`
   top: 20px;
 `
 
-const TrashCan = styled.img`
+const Trash = styled.img`
   position: absolute;
   right: 55px;
   bottom: 60px;
@@ -207,7 +207,7 @@ const HoldingModal: React.SFC<ModalProps & ReactModal.Props> = (
               Save
             </Button>
             {props.holding ? (
-              <TrashCan
+              <Trash
                 src={trashIcon}
                 onClick={() => deleteHolding()}
                 alt="Icon"

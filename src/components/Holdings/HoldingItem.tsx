@@ -3,31 +3,31 @@ import styled from 'styled-components'
 import accounting from 'accounting'
 import {
   StylelessLink,
-  Wrapper,
-  VerticalMiddleContainer,
   Indicator,
-  ItemContainer
+  ItemContainer,
+  ItemContentWrapper
 } from '../LongItem'
 import db from '../../db'
 
 import forwardIcon from '../../assets/forward.png'
 
 const ColorStrip = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 6px;
-  height: 100%;
   background-color: ${props => props.color || '#ffbf00'};
 `
 
-const HoldingTitle = styled(VerticalMiddleContainer)`
+const InfoContainer = styled.div`
+  padding-left: 14px;
+`
+
+const HoldingTitle = styled.div`
   color: #2a364a;
   font-size: 18px;
+  text-align: left;
 `
 
 const HoldingValues = styled.div`
-  display: flex;  
+  display: flex;
   flex: 1;
   flex-direction: row;
 `
@@ -56,11 +56,14 @@ const HoldingItemContainer = styled(ItemContainer)`
 `
 
 interface HoldingItem {
-  holding : Holding
-  percentage : Number
+  holding: Holding
+  percentage: Number
 }
 
-const HoldingItem = ({holding: {id, currency_code, hex_color, name, value}, percentage}) => {
+const HoldingItem = ({
+  holding: { id, currency_code, hex_color, name, value },
+  percentage
+}) => {
   const currencySymbol = db
     .get('currencies')
     .find({ code: currency_code })
@@ -70,20 +73,20 @@ const HoldingItem = ({holding: {id, currency_code, hex_color, name, value}, perc
     <StylelessLink to={`/holdings/${id}`}>
       <HoldingItemContainer>
         <ColorStrip color={hex_color} />
-        <Wrapper>
-          <HoldingTitle>{name}</HoldingTitle>
-          <HoldingValues>
-            <HoldingTotal>
-              {accounting.formatMoney(value, currencySymbol)}
-            </HoldingTotal>
-            <HoldingPercentage>
-              {percentage + '%'}
-            </HoldingPercentage>
-          </HoldingValues>
-        </Wrapper>
-        <Indicator>
-          <img src={forwardIcon} alt="Forward" />
-        </Indicator>
+        <ItemContentWrapper>
+          <InfoContainer>
+            <HoldingTitle>{name}</HoldingTitle>
+            <HoldingValues>
+              <HoldingTotal>
+                {accounting.formatMoney(value, currencySymbol)}
+              </HoldingTotal>
+              <HoldingPercentage>{percentage + '%'}</HoldingPercentage>
+            </HoldingValues>
+          </InfoContainer>
+          <Indicator>
+            <img src={forwardIcon} alt="Forward" />
+          </Indicator>
+        </ItemContentWrapper>
       </HoldingItemContainer>
     </StylelessLink>
   )

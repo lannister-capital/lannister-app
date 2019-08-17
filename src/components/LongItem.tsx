@@ -5,26 +5,8 @@ export const StylelessLink = styled(Link)`
   text-decoration: none;
 `
 
-export const VerticalMiddleContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-`
-
-export const Wrapper = styled.div`
-  padding-left: 20px;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-`
-
 export const Indicator = styled.div`
-  align-items: flex-end;
-  display: flex;
   flex: 1;
-  justify-content: center;
-  flex-direction: column;
   padding-right: 10px;
   text-align: right;
 
@@ -38,13 +20,20 @@ export const ItemContainer = styled.div`
   background-color: #e8ebf4;
   border-radius: 4px;
   display: flex;
+  flex-direction: row;
   margin: auto;
-  margin-bottom: 10px;
   max-width: 450px;
   min-height: 65px;
   overflow: hidden;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   position: relative;
   width: 100%;
+`
+
+export const ItemContentWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `

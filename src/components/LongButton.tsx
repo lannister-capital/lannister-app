@@ -1,19 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import forwardIcon from '../assets/forward.png'
-import { 
-  StylelessLink, 
-  Wrapper, 
-  VerticalMiddleContainer,
+import {
+  StylelessLink,
   Indicator,
-  ItemContainer
+  ItemContainer,
+  ItemContentWrapper
 } from './LongItem'
 
-const TextTitle = styled(VerticalMiddleContainer)`
+const TextTitle = styled.div`
   color: #2a364a;
   font-size: 18px;
+  padding-left: 20px;
 `
-const TextContainer = styled(ItemContainer)`
+const HoverContainer = styled(ItemContainer)`
   &:hover {
     background-color: #f8f8ff;
     cursor: pointer;
@@ -21,22 +21,22 @@ const TextContainer = styled(ItemContainer)`
 `
 
 interface LongButton {
-    text: String
+  text: String
 }
-  
-const LongButton = ({text}) => {
+
+const LongButton = ({ text }) => {
   return (
     <StylelessLink to={`/holdings`}>
-      <TextContainer>
-        <Wrapper>
+      <HoverContainer>
+        <ItemContentWrapper>
           <TextTitle>{text}</TextTitle>
-        </Wrapper>
-        <Indicator>
-          <img src={forwardIcon} alt="Forward" />
-        </Indicator>
-      </TextContainer>
+          <Indicator>
+            <img src={forwardIcon} alt="Forward" />
+          </Indicator>
+        </ItemContentWrapper>
+      </HoverContainer>
     </StylelessLink>
   )
 }
 
-export default LongButton;
+export default LongButton

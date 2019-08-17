@@ -26,6 +26,12 @@ const Wrapper = styled.div`
 
 const Holding = (props: { match: { params: { id: string } } }) => {
   const id = props.match.params.id
+  const [holding, setHolding] = useState<Holding>(
+    db
+      .get('holdings')
+      .find({ id: id })
+      .value()
+  )
   const [openHoldingModal, setOpenHoldingModal] = useState(false)
   const [openTransactionModal, setOpenTransactionModal] = useState(false)
   const [percent, setPercent] = useState('%')
@@ -35,10 +41,6 @@ const Holding = (props: { match: { params: { id: string } } }) => {
     (a: number, b: Holding) => a + convertedValue(b),
     0
   )
-  const holding: Holding = db
-    .get('holdings')
-    .find({ id: id })
-    .value()
   holding.convertedValue = convertedValue(holding)
   const currencySymbol = db
     .get('currencies')
@@ -63,6 +65,15 @@ const Holding = (props: { match: { params: { id: string } } }) => {
   const handleMouseOut = useCallback(() => {
     setPercent('%')
   }, [])
+
+  const updateHolding = () => {
+    setHolding(
+      db
+        .get('holdings')
+        .find({ id: id })
+        .value()
+    )
+  }
 
   return (
     <div>
@@ -118,9 +129,11 @@ const Holding = (props: { match: { params: { id: string } } }) => {
             {(holding.transactions || []).map((transaction: Transaction) => {
               return (
                 <TransactionItem
+                  holding={holding}
                   transaction={transaction}
                   currency_code={holding.currency_code}
                   key={transaction.name}
+                  onDelete={updateHolding}
                 />
               )
             })}
@@ -140,7 +153,10 @@ const Holding = (props: { match: { params: { id: string } } }) => {
         isOpen={openTransactionModal}
         onRequestClose={() => setOpenTransactionModal(false)}
         onCancel={() => setOpenTransactionModal(false)}
-        onCreate={() => setOpenTransactionModal(false)}
+        onCreate={() => {
+          setOpenTransactionModal(false)
+          updateHolding()
+        }}
         holding={holding}
       />
     </div>
