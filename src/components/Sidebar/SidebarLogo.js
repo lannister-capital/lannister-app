@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const Logo = styled.div`
   position: absolute;
@@ -14,7 +15,7 @@ const Logo = styled.div`
 const SidebarLogo = ({ icon }) => {
   return (
     <Logo>
-      <div>{icon && <img src={icon} alt="Icon" />}</div>
+      <Link to="/">{icon && <img src={icon} alt="Icon" />}</Link>
     </Logo>
   )
 }
