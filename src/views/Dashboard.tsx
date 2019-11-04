@@ -41,7 +41,10 @@ const Dashboard = () => {
     allHoldings.sort((a: Holding, b: Holding) =>
       b.convertedValue! > a.convertedValue! ? 1 : -1
     )
-    setHoldings(allHoldings)
+    const filteredHoldings = allHoldings.filter(
+      (holding: Holding) => holding.value !== null
+    )
+    setHoldings(filteredHoldings)
   }, [])
 
   const handleMouseOver = useCallback(cell => {
