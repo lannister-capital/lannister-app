@@ -31,7 +31,7 @@ const Holdings = () => {
       convertedValue(b) > convertedValue(a) ? 1 : -1
     )
     const filteredHoldings = allHoldings.filter(
-      (holding: Holding) => holding.value !== null
+      (holding: Holding) => !!holding.value
     )
     setHoldings(filteredHoldings)
   }, [openHoldingModal])

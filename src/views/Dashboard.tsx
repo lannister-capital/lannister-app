@@ -42,7 +42,7 @@ const Dashboard = () => {
       b.convertedValue! > a.convertedValue! ? 1 : -1
     )
     const filteredHoldings = allHoldings.filter(
-      (holding: Holding) => holding.value !== null
+      (holding: Holding) => !!holding.value
     )
     setHoldings(filteredHoldings)
   }, [])
