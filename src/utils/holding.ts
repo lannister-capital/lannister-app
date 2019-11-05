@@ -14,7 +14,11 @@ export const convertedValue = (holding: Holding) => {
     .find({ code: currentGlobalCurrencyCode })
     .value()
 
-  const euroValue: number = holding.value / (currency.euro_rate || 1)
+  let euro_rate = 1
+  if (currency && currency.euro_rate) {
+    euro_rate = currency.euro_rate
+  }
+  const euroValue: number = holding.value / euro_rate
   const globalCurrencyValue: number =
     euroValue * (globalCurrency.euro_rate || 1)
 
