@@ -37,10 +37,9 @@ const Holding = (props: { match: { params: { id: string } } }) => {
   const [percent, setPercent] = useState('%')
 
   const holdings = db.read('holdings').value().holdings
-  const totalHoldingsValue = holdings.reduce(
-    (a: number, b: Holding) => a + convertedValue(b),
-    0
-  )
+  const totalHoldingsValue = holdings
+    .filter((holding: Holding) => !!holding.value)
+    .reduce((a: number, b: Holding) => a + convertedValue(b), 0)
   holding.convertedValue = convertedValue(holding)
   const currencySymbol = db
     .get('currencies')
