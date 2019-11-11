@@ -45,9 +45,7 @@ const Holdings = () => {
   // Calling convertedValue here again, because we can't use holding.convertedValue since it's optional in the interface
   holdings.forEach(holding => {
     percentages.push(
-      Math.round(
-        ((convertedValue(holding) / totalHoldingsValue) * 100 * 10) / 10
-      )
+      Math.round( (convertedValue(holding) / totalHoldingsValue * 100) * 100 + Number.EPSILON) / 100
     )
   })
 
