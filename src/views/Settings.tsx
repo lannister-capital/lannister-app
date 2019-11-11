@@ -68,7 +68,6 @@ const Settings = () => {
           {!isLoggedIn() && (
             <SettingsItem
               text="Sync with Blockstack"
-              subtext="(beta, does not sync with mobile version)"
               onClick={() => loginWithBlockstack()}
               icon={syncIcon}
             />
