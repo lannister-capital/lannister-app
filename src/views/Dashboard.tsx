@@ -63,9 +63,7 @@ const Dashboard = () => {
   // since it's optional in the interface
   holdings.forEach(holding => {
     percentages.push(
-      Math.round(
-        ((convertedValue(holding) / totalHoldingsValue) * 100 * 10) / 10
-      )
+      Math.round( (convertedValue(holding) / totalHoldingsValue * 100) * 100 + Number.EPSILON) / 100
     )
   })
 
