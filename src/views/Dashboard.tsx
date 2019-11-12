@@ -34,15 +34,15 @@ const Dashboard = () => {
 
   useEffect(() => {
     const allHoldings: [Holding] = db.read('holdings').value().holdings
-    allHoldings.map((holding: Holding) => {
+    const filteredHoldings = allHoldings.filter(
+      (holding: Holding) => !!holding.value
+    )
+    filteredHoldings.map((holding: Holding) => {
       holding.convertedValue = convertedValue(holding)
       return holding
     })
-    allHoldings.sort((a: Holding, b: Holding) =>
+    filteredHoldings.sort((a: Holding, b: Holding) =>
       b.convertedValue! > a.convertedValue! ? 1 : -1
-    )
-    const filteredHoldings = allHoldings.filter(
-      (holding: Holding) => !!holding.value
     )
     setHoldings(filteredHoldings)
   }, [])
@@ -63,7 +63,8 @@ const Dashboard = () => {
   // since it's optional in the interface
   holdings.forEach(holding => {
     percentages.push(
-      Math.round( (convertedValue(holding) / totalHoldingsValue * 100) * 100 + Number.EPSILON) / 100
+      Math.round((convertedValue(holding) / totalHoldingsValue) * 100 * 100) /
+        100
     )
   })
 

@@ -27,11 +27,11 @@ const Holdings = () => {
 
   useEffect(() => {
     const allHoldings = db.read('holdings').value().holdings
-    allHoldings.sort((a: Holding, b: Holding) =>
-      convertedValue(b) > convertedValue(a) ? 1 : -1
-    )
     const filteredHoldings = allHoldings.filter(
       (holding: Holding) => !!holding.value
+    )
+    filteredHoldings.sort((a: Holding, b: Holding) =>
+      convertedValue(b) > convertedValue(a) ? 1 : -1
     )
     setHoldings(filteredHoldings)
   }, [openHoldingModal])
@@ -45,7 +45,10 @@ const Holdings = () => {
   // Calling convertedValue here again, because we can't use holding.convertedValue since it's optional in the interface
   holdings.forEach(holding => {
     percentages.push(
-      Math.round( (convertedValue(holding) / totalHoldingsValue * 100) * 100 + Number.EPSILON) / 100
+      Math.round(
+        (convertedValue(holding) / totalHoldingsValue) * 100 * 100 +
+          Number.EPSILON
+      ) / 100
     )
   })
 
