@@ -6,6 +6,8 @@ export const convertedValue = (holding: Holding) => {
     .find({ code: holding.currency_code })
     .value()
 
+  if (!currency) return 0
+
   // TODO: do not retrieve this everytime but allow immediate updates
   const currentGlobalCurrencyCode =
     localStorage.getItem('globalCurrencyCode') || 'EUR'
