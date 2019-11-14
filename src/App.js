@@ -24,6 +24,12 @@ const Column = styled.div`
   flex-direction: column;
 `
 
+const ProductHuntContainer = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+`
+
 const LargeColumn = styled(Column)`
   flex: 1;
 `
@@ -31,37 +37,46 @@ const LargeColumn = styled(Column)`
 const currencies = db.get('currencies').value()
 
 const updateExchangeRates = () => {
-  axios.get('https://api.exchangeratesapi.io/latest').then(response => {
-    const rates = response.data.rates
-    currencies.forEach(currency => {
+  axios
+    .get('https://api.exchangeratesapi.io/latest')
+    .then(response => {
+      const rates = response.data.rates
+      currencies.forEach(currency => {
+        db.get('currencies')
+          .find({ code: currency.code })
+          .assign({ euro_rate: rates[currency.code] })
+          .write()
+      })
+    })
+    .catch(error => {
+      console.log('Error getting exchange rate')
+    })
+
+  axios
+    .get('https://api.cryptonator.com/api/ticker/eur-eth')
+    .then(response => {
+      const rate = response.data.ticker.price
       db.get('currencies')
-        .find({ code: currency.code })
-        .assign({ euro_rate: rates[currency.code] })
+        .find({ code: 'ETH' })
+        .assign({ euro_rate: rate })
         .write()
     })
-  }).catch(error => {
-    console.log("Error getting exchange rate")
-  })
+    .catch(error => {
+      console.log('Error getting ticker')
+    })
 
-  axios.get('https://api.cryptonator.com/api/ticker/eur-eth').then(response => {
-    const rate = response.data.ticker.price
-    db.get('currencies')
-      .find({ code: 'ETH' })
-      .assign({ euro_rate: rate })
-      .write()
-  }).catch(error => {
-    console.log("Error getting ticker")
-  })
-
-  axios.get('https://api.cryptonator.com/api/ticker/eur-btc').then(response => {
-    const rate = response.data.ticker.price
-    db.get('currencies')
-      .find({ code: 'BTC' })
-      .assign({ euro_rate: rate })
-      .write()
-  }).catch(error => {
-    console.log("Error getting ticker")
-  })
+  axios
+    .get('https://api.cryptonator.com/api/ticker/eur-btc')
+    .then(response => {
+      const rate = response.data.ticker.price
+      db.get('currencies')
+        .find({ code: 'BTC' })
+        .assign({ euro_rate: rate })
+        .write()
+    })
+    .catch(error => {
+      console.log('Error getting ticker')
+    })
 }
 
 function App() {
@@ -78,6 +93,18 @@ function App() {
           <Sidebar />
         </Column>
         <LargeColumn>
+          <ProductHuntContainer>
+            <a
+              href="https://www.producthunt.com/posts/lannister-web?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-lannister-web"
+              target="_blank"
+              rel="noopener noreferrer">
+              <img
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=174468&theme=light"
+                alt="Lannister Web - Encrypted personal wealth manager :crown: | Product Hunt Embed"
+                styled={{ width: '250px', height: '54px' }}
+              />
+            </a>
+          </ProductHuntContainer>
           <MainContainer>
             <Route path="/" exact component={Dashboard} />
             <Route path="/holdings" exact component={Holdings} />
