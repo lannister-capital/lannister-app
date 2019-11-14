@@ -13,7 +13,8 @@ import githubIcon from '../assets/github.svg'
 import {
   loginWithBlockstack,
   logoutFromBlockstack,
-  isLoggedIn
+  isLoggedIn,
+  getUsername
 } from '../utils/blockstack'
 import { exportData } from '../utils/export'
 
@@ -60,7 +61,7 @@ const Settings = () => {
           />
           {isLoggedIn() && (
             <SettingsItem
-              text="Logout from Blockstack"
+              text={`Logout (${getUsername()})`}
               onClick={() => logoutFromBlockstack()}
               icon={syncIcon}
             />

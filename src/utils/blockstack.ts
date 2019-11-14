@@ -57,6 +57,14 @@ export const downloadDb = () => {
   }
 }
 
+export const getUsername = () => {
+  if (userSession.isUserSignedIn()) {
+    return `@${blockstack.loadUserData().username}`
+  } else {
+    return ''
+  }
+}
+
 export const handleSignIn = () => {
   if (userSession.isSignInPending()) {
     userSession.handlePendingSignIn().then(_ => {
